@@ -1,0 +1,120 @@
+/*
+ * @abeestudio/ui — тема cosmic-dark
+ * Характер: тёмная, космическая, глубокая.
+ * Фиолетово-синий акцент, почти чёрный фон, глоу-эффекты, средние радиусы.
+ * Для RPG, стратегий, космических симуляторов.
+ */
+
+/* ── ТЁМНЫЙ ВАРИАНТ (умолчание) ─────────────────────────── */
+.theme-cosmic-dark,
+.theme-cosmic-dark.dark {
+  color-scheme: dark;
+
+  --ui-bg:       #0d0d1a;
+  --ui-bg-2:     #0a0a14;
+
+  --ui-surface:    rgba(255 255 255 / 0.04);
+  --ui-surface-2:  rgba(255 255 255 / 0.08);
+  --ui-surface-3:  rgba(255 255 255 / 0.13);
+
+  --ui-border:     rgba(124 77 255 / 0.20);
+  --ui-border-2:   rgba(124 77 255 / 0.35);
+
+  --ui-text:       #e8e4ff;
+  --ui-text-2:     rgba(232 228 255 / 0.55);
+  --ui-text-3:     rgba(232 228 255 / 0.28);
+  --ui-text-inv:   #0d0d1a;
+
+  --ui-primary:          #7c4dff;
+  --ui-primary-hover:    #9c6fff;
+  --ui-primary-active:   #5c2edb;
+  --ui-primary-surface:  rgba(124 77 255 / 0.18);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(124 77 255 / 0.12);
+  --ui-secondary-hover:  rgba(124 77 255 / 0.22);
+  --ui-secondary-active: rgba(124 77 255 / 0.08);
+  --ui-secondary-text:   #e8e4ff;
+
+  --ui-danger:         #ff5252;
+  --ui-danger-surface: rgba(255 82 82 / 0.16);
+  --ui-success:        #69f0ae;
+  --ui-success-surface:rgba(105 240 174 / 0.14);
+  --ui-warn:           #ffd740;
+  --ui-warn-surface:   rgba(255 215 64 / 0.14);
+  --ui-info:           #40c4ff;
+  --ui-info-surface:   rgba(64 196 255 / 0.14);
+
+  --ui-overlay: rgba(0 0 0 / 0.75);
+
+  /* Радиусы — sci-fi */
+  --ui-r-xs:   3px;
+  --ui-r-sm:   7px;
+  --ui-r-md:   12px;
+  --ui-r-lg:   20px;
+  --ui-r-xl:   30px;
+  --ui-r-pill: 9999px;
+
+  /* Тени — с глоу */
+  --ui-shadow-sm:   0 2px  8px rgba(0 0 0 / 0.50);
+  --ui-shadow-md:   0 4px 20px rgba(0 0 0 / 0.60);
+  --ui-shadow-lg:   0 8px 40px rgba(0 0 0 / 0.70);
+  --ui-shadow-glow: 0 0 28px rgba(124 77 255 / 0.55),
+                    0 0 60px rgba(124 77 255 / 0.20);
+
+  --ui-font:  system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ui-fs-xs: 11px;
+  --ui-fs-sm: 13px;
+  --ui-fs-md: 16px;
+  --ui-fs-lg: 20px;
+  --ui-fs-xl: 26px;
+  --ui-fw-n:  400;
+  --ui-fw-m:  500;
+  --ui-fw-b:  700;
+  --ui-lh:    1.4;
+
+  /* Анимации — плавные с лёгкой инерцией */
+  --ui-dur:    220ms;
+  --ui-dur-s:  400ms;
+  --ui-ease:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-spring: cubic-bezier(0.28, 1.36, 0.60, 1);
+  --ui-snap:   cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ── СВЕТЛЫЙ ВАРИАНТ ─────────────────────────────────────── */
+.theme-cosmic-dark.light {
+  color-scheme: light;
+
+  --ui-bg:       #f5f0ff;
+  --ui-bg-2:     #ece6fa;
+
+  --ui-surface:    rgba(255 255 255 / 0.85);
+  --ui-surface-2:  rgba(255 255 255 / 0.95);
+  --ui-surface-3:  #ffffff;
+
+  --ui-border:     rgba(124 77 255 / 0.18);
+  --ui-border-2:   rgba(124 77 255 / 0.30);
+
+  --ui-text:       #1a0040;
+  --ui-text-2:     rgba(26 0 64 / 0.55);
+  --ui-text-3:     rgba(26 0 64 / 0.30);
+  --ui-text-inv:   #ffffff;
+
+  --ui-primary:          #651fff;
+  --ui-primary-hover:    #7c4dff;
+  --ui-primary-active:   #4a00c8;
+  --ui-primary-surface:  rgba(101 31 255 / 0.10);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(101 31 255 / 0.08);
+  --ui-secondary-hover:  rgba(101 31 255 / 0.14);
+  --ui-secondary-active: rgba(101 31 255 / 0.06);
+  --ui-secondary-text:   #1a0040;
+
+  --ui-overlay: rgba(0 0 0 / 0.45);
+
+  --ui-shadow-sm:   0 1px  4px rgba(101 31 255 / 0.12);
+  --ui-shadow-md:   0 3px 14px rgba(101 31 255 / 0.14);
+  --ui-shadow-lg:   0 6px 28px rgba(101 31 255 / 0.18);
+  --ui-shadow-glow: 0 0 18px rgba(101 31 255 / 0.32);
+}

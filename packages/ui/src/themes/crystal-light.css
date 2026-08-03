@@ -1,0 +1,119 @@
+/*
+ * @abeestudio/ui — тема crystal-light
+ * Характер: светлая, чистая, минималистичная.
+ * Индиго-акцент, белый фон, чёткие тени, умеренные радиусы.
+ * Подходит для головоломок, казуальных игр, детских приложений.
+ */
+
+/* ── СВЕТЛЫЙ ВАРИАНТ (умолчание) ────────────────────────── */
+.theme-crystal-light,
+.theme-crystal-light.light {
+  color-scheme: light;
+
+  --ui-bg:       #f8f9fc;
+  --ui-bg-2:     #eef0f6;
+
+  --ui-surface:    #ffffff;
+  --ui-surface-2:  #ffffff;
+  --ui-surface-3:  #ffffff;
+
+  --ui-border:     rgba(0 0 0 / 0.09);
+  --ui-border-2:   rgba(0 0 0 / 0.16);
+
+  --ui-text:       #1a1d2e;
+  --ui-text-2:     rgba(26 29 46 / 0.55);
+  --ui-text-3:     rgba(26 29 46 / 0.30);
+  --ui-text-inv:   #ffffff;
+
+  --ui-primary:          #5c6bc0;
+  --ui-primary-hover:    #3f51b5;
+  --ui-primary-active:   #3949ab;
+  --ui-primary-surface:  rgba(92 107 192 / 0.10);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(0 0 0 / 0.06);
+  --ui-secondary-hover:  rgba(0 0 0 / 0.11);
+  --ui-secondary-active: rgba(0 0 0 / 0.04);
+  --ui-secondary-text:   #1a1d2e;
+
+  --ui-danger:         #e53935;
+  --ui-danger-surface: rgba(229 57 53 / 0.10);
+  --ui-success:        #43a047;
+  --ui-success-surface:rgba(67 160 71 / 0.10);
+  --ui-warn:           #fb8c00;
+  --ui-warn-surface:   rgba(251 140 0 / 0.10);
+  --ui-info:           #1e88e5;
+  --ui-info-surface:   rgba(30 136 229 / 0.10);
+
+  --ui-overlay: rgba(0 0 0 / 0.40);
+
+  /* Радиусы — чистые, не слишком округлые */
+  --ui-r-xs:   3px;
+  --ui-r-sm:   6px;
+  --ui-r-md:   10px;
+  --ui-r-lg:   16px;
+  --ui-r-xl:   24px;
+  --ui-r-pill: 9999px;
+
+  /* Тени — мягкие многослойные */
+  --ui-shadow-sm:   0 1px 3px rgba(0 0 0 / 0.10), 0 1px 2px rgba(0 0 0 / 0.06);
+  --ui-shadow-md:   0 4px 12px rgba(0 0 0 / 0.10), 0 2px 4px rgba(0 0 0 / 0.06);
+  --ui-shadow-lg:   0 10px 30px rgba(0 0 0 / 0.12), 0 4px 8px rgba(0 0 0 / 0.08);
+  --ui-shadow-glow: 0 0 16px rgba(92 107 192 / 0.28);
+
+  --ui-font:  system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ui-fs-xs: 11px;
+  --ui-fs-sm: 13px;
+  --ui-fs-md: 16px;
+  --ui-fs-lg: 20px;
+  --ui-fs-xl: 26px;
+  --ui-fw-n:  400;
+  --ui-fw-m:  500;
+  --ui-fw-b:  700;
+  --ui-lh:    1.4;
+
+  /* Анимации — плавные, спокойные */
+  --ui-dur:    180ms;
+  --ui-dur-s:  320ms;
+  --ui-ease:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-spring: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ui-snap:   cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ── ТЁМНЫЙ ВАРИАНТ ──────────────────────────────────────── */
+.theme-crystal-light.dark {
+  color-scheme: dark;
+
+  --ui-bg:       #1c1e2e;
+  --ui-bg-2:     #151728;
+
+  --ui-surface:    rgba(255 255 255 / 0.06);
+  --ui-surface-2:  rgba(255 255 255 / 0.11);
+  --ui-surface-3:  rgba(255 255 255 / 0.18);
+
+  --ui-border:     rgba(255 255 255 / 0.09);
+  --ui-border-2:   rgba(255 255 255 / 0.16);
+
+  --ui-text:       #e8eaf6;
+  --ui-text-2:     rgba(232 234 246 / 0.55);
+  --ui-text-3:     rgba(232 234 246 / 0.30);
+  --ui-text-inv:   #1c1e2e;
+
+  --ui-primary:          #7986cb;
+  --ui-primary-hover:    #9fa8da;
+  --ui-primary-active:   #5c6bc0;
+  --ui-primary-surface:  rgba(121 134 203 / 0.16);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(255 255 255 / 0.09);
+  --ui-secondary-hover:  rgba(255 255 255 / 0.16);
+  --ui-secondary-active: rgba(255 255 255 / 0.07);
+  --ui-secondary-text:   #e8eaf6;
+
+  --ui-overlay: rgba(0 0 0 / 0.60);
+
+  --ui-shadow-sm:   0 2px 8px rgba(0 0 0 / 0.35);
+  --ui-shadow-md:   0 4px 20px rgba(0 0 0 / 0.45);
+  --ui-shadow-lg:   0 8px 40px rgba(0 0 0 / 0.55);
+  --ui-shadow-glow: 0 0 20px rgba(121 134 203 / 0.38);
+}

@@ -1,0 +1,121 @@
+/*
+ * @abeestudio/ui — тема steel-sharp
+ * Характер: холодная, технологичная, точная.
+ * Циановый акцент, тёмная сталь, острые углы, мгновенная анимация.
+ * Для стратегий, тактических игр, sci-fi, киберпанк.
+ */
+
+/* ── ТЁМНЫЙ ВАРИАНТ (умолчание) ─────────────────────────── */
+.theme-steel-sharp,
+.theme-steel-sharp.dark {
+  color-scheme: dark;
+
+  --ui-bg:       #0f1923;
+  --ui-bg-2:     #0b131c;
+
+  --ui-surface:    rgba(255 255 255 / 0.04);
+  --ui-surface-2:  rgba(255 255 255 / 0.08);
+  --ui-surface-3:  rgba(255 255 255 / 0.12);
+
+  --ui-border:     rgba(0 188 212 / 0.22);
+  --ui-border-2:   rgba(0 188 212 / 0.40);
+
+  --ui-text:       #cfd8dc;
+  --ui-text-2:     rgba(207 216 220 / 0.55);
+  --ui-text-3:     rgba(207 216 220 / 0.28);
+  --ui-text-inv:   #0f1923;
+
+  --ui-primary:          #00bcd4;
+  --ui-primary-hover:    #26c6da;
+  --ui-primary-active:   #00acc1;
+  --ui-primary-surface:  rgba(0 188 212 / 0.14);
+  --ui-primary-text:     #0f1923;
+
+  --ui-secondary:        rgba(0 188 212 / 0.10);
+  --ui-secondary-hover:  rgba(0 188 212 / 0.18);
+  --ui-secondary-active: rgba(0 188 212 / 0.07);
+  --ui-secondary-text:   #cfd8dc;
+
+  --ui-danger:         #ff5252;
+  --ui-danger-surface: rgba(255 82 82 / 0.14);
+  --ui-success:        #00e676;
+  --ui-success-surface:rgba(0 230 118 / 0.14);
+  --ui-warn:           #ffea00;
+  --ui-warn-surface:   rgba(255 234 0 / 0.12);
+  --ui-info:           #40c4ff;
+  --ui-info-surface:   rgba(64 196 255 / 0.12);
+
+  --ui-overlay: rgba(0 0 0 / 0.70);
+
+  /* Радиусы — острые, технологичные */
+  --ui-r-xs:   2px;
+  --ui-r-sm:   4px;
+  --ui-r-md:   7px;
+  --ui-r-lg:   12px;
+  --ui-r-xl:   18px;
+  --ui-r-pill: 9999px;
+
+  /* Тени — холодные */
+  --ui-shadow-sm:   0 2px  6px rgba(0 0 0 / 0.45);
+  --ui-shadow-md:   0 4px 18px rgba(0 0 0 / 0.55);
+  --ui-shadow-lg:   0 8px 36px rgba(0 0 0 / 0.65);
+  --ui-shadow-glow: 0 0 20px rgba(0 188 212 / 0.50),
+                    0 0 50px rgba(0 188 212 / 0.18);
+
+  --ui-font:  'Courier New', 'SF Mono', Consolas,
+              system-ui, -apple-system, sans-serif;
+  --ui-fs-xs: 11px;
+  --ui-fs-sm: 13px;
+  --ui-fs-md: 15px;
+  --ui-fs-lg: 19px;
+  --ui-fs-xl: 24px;
+  --ui-fw-n:  400;
+  --ui-fw-m:  500;
+  --ui-fw-b:  700;
+  --ui-lh:    1.35;
+
+  /* Анимации — быстрые, почти мгновенные */
+  --ui-dur:    120ms;
+  --ui-dur-s:  220ms;
+  --ui-ease:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-spring: cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-snap:   cubic-bezier(0.0, 0.0, 1.0, 1.0);
+}
+
+/* ── СВЕТЛЫЙ ВАРИАНТ ─────────────────────────────────────── */
+.theme-steel-sharp.light {
+  color-scheme: light;
+
+  --ui-bg:       #e8f0f5;
+  --ui-bg-2:     #dde7ee;
+
+  --ui-surface:    rgba(255 255 255 / 0.85);
+  --ui-surface-2:  rgba(255 255 255 / 0.96);
+  --ui-surface-3:  #ffffff;
+
+  --ui-border:     rgba(0 151 167 / 0.22);
+  --ui-border-2:   rgba(0 151 167 / 0.38);
+
+  --ui-text:       #102027;
+  --ui-text-2:     rgba(16 32 39 / 0.55);
+  --ui-text-3:     rgba(16 32 39 / 0.30);
+  --ui-text-inv:   #ffffff;
+
+  --ui-primary:          #0097a7;
+  --ui-primary-hover:    #00acc1;
+  --ui-primary-active:   #00838f;
+  --ui-primary-surface:  rgba(0 151 167 / 0.10);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(0 151 167 / 0.08);
+  --ui-secondary-hover:  rgba(0 151 167 / 0.15);
+  --ui-secondary-active: rgba(0 151 167 / 0.06);
+  --ui-secondary-text:   #102027;
+
+  --ui-overlay: rgba(0 0 0 / 0.42);
+
+  --ui-shadow-sm:   0 1px  3px rgba(0 0 0 / 0.10);
+  --ui-shadow-md:   0 3px 12px rgba(0 0 0 / 0.13);
+  --ui-shadow-lg:   0 6px 24px rgba(0 0 0 / 0.16);
+  --ui-shadow-glow: 0 0 14px rgba(0 151 167 / 0.30);
+}

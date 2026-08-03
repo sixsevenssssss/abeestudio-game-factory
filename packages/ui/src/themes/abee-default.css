@@ -1,0 +1,128 @@
+/*
+ * @abeestudio/ui — тема abee-default
+ * Характер: фирменная тёмная тема студии abeeStudio.
+ * Янтарный акцент, глубокий тёмно-синий фон, стеклянные панели.
+ * Округлые формы, пружинные анимации — дружелюбно и дорого.
+ */
+
+/* ── ТЁМНЫЙ ВАРИАНТ (умолчание) ─────────────────────────── */
+.theme-abee-default,
+.theme-abee-default.dark {
+  color-scheme: dark;
+
+  /* Фон */
+  --ui-bg:       #1a1a2e;
+  --ui-bg-2:     #16213e;
+
+  /* Поверхности — glassmorphism */
+  --ui-surface:    rgba(255 255 255 / 0.07);
+  --ui-surface-2:  rgba(255 255 255 / 0.13);
+  --ui-surface-3:  rgba(255 255 255 / 0.20);
+
+  /* Рамки */
+  --ui-border:     rgba(255 255 255 / 0.10);
+  --ui-border-2:   rgba(255 255 255 / 0.18);
+
+  /* Текст */
+  --ui-text:       #eeeef2;
+  --ui-text-2:     rgba(238 238 242 / 0.55);
+  --ui-text-3:     rgba(238 238 242 / 0.30);
+  --ui-text-inv:   #1a1a2e;
+
+  /* Акцент — янтарь */
+  --ui-primary:          #f0a500;
+  --ui-primary-hover:    #ffb71b;
+  --ui-primary-active:   #d69200;
+  --ui-primary-surface:  rgba(240 165 0 / 0.16);
+  --ui-primary-text:     #1a1a2e;
+
+  /* Вторичная кнопка */
+  --ui-secondary:        rgba(255 255 255 / 0.10);
+  --ui-secondary-hover:  rgba(255 255 255 / 0.17);
+  --ui-secondary-active: rgba(255 255 255 / 0.08);
+  --ui-secondary-text:   #eeeef2;
+
+  /* Состояния */
+  --ui-danger:         #ef5350;
+  --ui-danger-surface: rgba(239 83 80 / 0.16);
+  --ui-success:        #66bb6a;
+  --ui-success-surface:rgba(102 187 106 / 0.16);
+  --ui-warn:           #ffa726;
+  --ui-warn-surface:   rgba(255 167 38 / 0.16);
+  --ui-info:           #42a5f5;
+  --ui-info-surface:   rgba(66 165 245 / 0.16);
+
+  /* Оверлей */
+  --ui-overlay: rgba(0 0 0 / 0.65);
+
+  /* Радиусы — округлые и дружелюбные */
+  --ui-r-xs:   4px;
+  --ui-r-sm:   8px;
+  --ui-r-md:   14px;
+  --ui-r-lg:   22px;
+  --ui-r-xl:   32px;
+  --ui-r-pill: 9999px;
+
+  /* Тени */
+  --ui-shadow-sm:   0 2px  8px rgba(0 0 0 / 0.35);
+  --ui-shadow-md:   0 4px 20px rgba(0 0 0 / 0.45);
+  --ui-shadow-lg:   0 8px 40px rgba(0 0 0 / 0.55);
+  --ui-shadow-glow: 0 0 24px rgba(240 165 0 / 0.40);
+
+  /* Типографика */
+  --ui-font:  system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ui-fs-xs: 11px;
+  --ui-fs-sm: 13px;
+  --ui-fs-md: 16px;
+  --ui-fs-lg: 20px;
+  --ui-fs-xl: 26px;
+  --ui-fw-n:  400;
+  --ui-fw-m:  500;
+  --ui-fw-b:  700;
+  --ui-lh:    1.4;
+
+  /* Анимации — пружинный характер */
+  --ui-dur:    200ms;
+  --ui-dur-s:  380ms;
+  --ui-ease:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ui-snap:   cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ── СВЕТЛЫЙ ВАРИАНТ ─────────────────────────────────────── */
+.theme-abee-default.light {
+  color-scheme: light;
+
+  --ui-bg:       #f5f0e8;
+  --ui-bg-2:     #ede8df;
+
+  --ui-surface:    rgba(255 255 255 / 0.82);
+  --ui-surface-2:  rgba(255 255 255 / 0.95);
+  --ui-surface-3:  #ffffff;
+
+  --ui-border:     rgba(0 0 0 / 0.09);
+  --ui-border-2:   rgba(0 0 0 / 0.16);
+
+  --ui-text:       #1a1a2e;
+  --ui-text-2:     rgba(26 26 46 / 0.55);
+  --ui-text-3:     rgba(26 26 46 / 0.30);
+  --ui-text-inv:   #ffffff;
+
+  --ui-primary:          #d08800;
+  --ui-primary-hover:    #e89a00;
+  --ui-primary-active:   #b87700;
+  --ui-primary-surface:  rgba(208 136 0 / 0.12);
+  --ui-primary-text:     #ffffff;
+
+  --ui-secondary:        rgba(0 0 0 / 0.07);
+  --ui-secondary-hover:  rgba(0 0 0 / 0.12);
+  --ui-secondary-active: rgba(0 0 0 / 0.05);
+  --ui-secondary-text:   #1a1a2e;
+
+  --ui-overlay: rgba(0 0 0 / 0.45);
+
+  --ui-shadow-sm:   0 1px  4px rgba(0 0 0 / 0.10);
+  --ui-shadow-md:   0 3px 14px rgba(0 0 0 / 0.14);
+  --ui-shadow-lg:   0 6px 28px rgba(0 0 0 / 0.18);
+  --ui-shadow-glow: 0 0 18px rgba(208 136 0 / 0.28);
+}
