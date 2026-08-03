@@ -155,3 +155,20 @@ isShowing, resetInterstitialTimer(), setInterstitialInterval().
 - _beforeShow/_afterShow — try/catch вокруг loop/audio (они nullable для тестов).
 - conc. защита: if (_showing) → rewarded немедленно false, interstitial Promise.resolve().
 - interstitial НЕ обновляет таймер при skipped — только при реальном показе (onClose).
+
+---
+
+## 2026-08-03 — Тик 9: AudioSystem (src/audio.js)
+
+**Что сделано:** написан `src/audio.js` — AudioSystem с null-backend для тестов.
+Шины music/sfx/ui: setVolume(bus, 0..1), setMute(bus, bool), duckForAd/unduck.
+play(id, opts): NullAudioHandle в null-backend; пул с trimPool при MAX_SFX_POOL.
+music(id): crossfade, повтор игнорируется, stopMusic().
+EventBus: app:hidden→suspend, app:visible→resumeCtx, audio:ducked/unducked.
+Тесты: 34 кейса. Регрессия 207 → зелёные. Итого 241.
+
+**Решения:**
+- Web Audio API реализован как NullHandle в этом тике (backend структурирован).
+  Реальный AudioBufferSourceNode будет добавлен когда появится ассет-загрузчик (тик 15+).
+  Для игр важна логика (пул, duck, crossfade) — она протестирована.
+- pool trimming: удаляем самый старый (handles[0]), новый добавляем в конец.
