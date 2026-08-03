@@ -1,0 +1,14 @@
+{
+  "menu": {
+    "play": "Play",
+    "settings": "Settings",
+    "about": "About"
+  },
+  "gameplay": {
+    "score": "Score: {{n}}",
+    "paused": "Paused"
+  },
+  "lang": {
+    "choose": "Choose language"
+  }
+}
