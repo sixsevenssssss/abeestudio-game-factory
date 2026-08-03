@@ -1,0 +1,10 @@
+{
+  "name": "@abeestudio/tools",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Инструменты проверки и публикации игр студии abeeStudio",
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "test": "node --test test/**/*.test.js"
+  }
+}
