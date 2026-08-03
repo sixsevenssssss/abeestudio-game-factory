@@ -1,0 +1,145 @@
+/*
+ * Input.css — текстовое поле ввода @abeestudio/ui
+ * Загружается автоматически при импорте Input.js.
+ */
+
+/* ── КОРНЕВОЙ КОНТЕЙНЕР ──────────────────────────────────── */
+.ui-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ── МЕТКА ───────────────────────────────────────────────── */
+.ui-input__label {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-sm, 13px);
+  font-weight: var(--ui-fw-m,  500);
+  color:       var(--ui-text-2);
+  cursor: pointer;
+}
+
+/* Метка подсвечивается при фокусе (через :has() если поддерживается) */
+.ui-input:has(.ui-input__field:focus) .ui-input__label {
+  color: var(--ui-primary, #f0a500);
+}
+
+/* ── ОБЁРТКА ─────────────────────────────────────────────── */
+.ui-input__wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── ПОЛЕ ────────────────────────────────────────────────── */
+.ui-input__field {
+  width: 100%;
+  /* Минимальный tap target ≥ 44px */
+  min-height: 44px;
+  padding: 0 14px;
+
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  /* ВАЖНО: 16px предотвращает авто-зум iOS при фокусе */
+  font-size:   max(16px, var(--ui-fs-md, 16px));
+  font-weight: var(--ui-fw-n, 400);
+  color:       var(--ui-text, #eeeef2);
+  line-height: 1.4;
+
+  background:   var(--ui-surface, rgba(255 255 255 / 0.07));
+  border:       1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+  border-radius: var(--ui-r-md, 14px);
+
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+
+  transition:
+    border-color  var(--ui-dur, 200ms) var(--ui-ease, ease),
+    background    var(--ui-dur, 200ms) var(--ui-ease, ease),
+    box-shadow    var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+
+.ui-input__field::placeholder {
+  color: var(--ui-text-3, rgba(238 238 242 / 0.30));
+}
+
+/* Hover */
+.ui-input__field:hover:not(:disabled) {
+  border-color: var(--ui-border-2, rgba(255 255 255 / 0.18));
+}
+
+/* Focus */
+.ui-input__field:focus {
+  border-color: var(--ui-primary, #f0a500);
+  background:   var(--ui-surface-2, rgba(255 255 255 / 0.13));
+  box-shadow:   0 0 0 3px var(--ui-primary-surface, rgba(240 165 0 / 0.16));
+}
+
+/* Автозаполнение — убираем жёлтый фон Chrome */
+.ui-input__field:-webkit-autofill,
+.ui-input__field:-webkit-autofill:hover,
+.ui-input__field:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--ui-bg, #1a1a2e) inset;
+  -webkit-text-fill-color: var(--ui-text, #eeeef2);
+}
+
+/* ── ИКОНКА ──────────────────────────────────────────────── */
+.ui-input__icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:  20px;
+  height: 20px;
+  color:  var(--ui-text-2);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.ui-input__icon svg {
+  width: 100%; height: 100%;
+  fill: currentColor; display: block;
+}
+
+/* Отступ текста если есть иконка */
+.ui-input__wrap--has-icon .ui-input__field {
+  padding-left: 44px; /* 14px + 20px icon + 10px gap */
+}
+
+/* ── ОШИБКА ──────────────────────────────────────────────── */
+.ui-input--error .ui-input__field {
+  border-color: var(--ui-danger, #ef5350);
+  background:   var(--ui-danger-surface, rgba(239 83 80 / 0.08));
+}
+.ui-input--error .ui-input__field:focus {
+  box-shadow: 0 0 0 3px var(--ui-danger-surface, rgba(239 83 80 / 0.20));
+}
+.ui-input--error .ui-input__label {
+  color: var(--ui-danger, #ef5350);
+}
+
+.ui-input__error-text {
+  font-family: var(--ui-font,  system-ui, sans-serif);
+  font-size:   var(--ui-fs-xs, 11px);
+  color:       var(--ui-danger, #ef5350);
+  line-height: 1.3;
+}
+
+/* ── DISABLED ────────────────────────────────────────────── */
+.ui-input--disabled .ui-input__field,
+.ui-input__field:disabled {
+  opacity: 0.40;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.ui-input--disabled .ui-input__label {
+  opacity: 0.40;
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ui-input__field { transition-duration: 1ms !important; }
+}
+.prefers-reduced-motion .ui-input__field { transition-duration: 1ms !important; }
