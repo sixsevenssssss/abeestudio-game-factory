@@ -8,7 +8,7 @@
 - [x] **Тик 1** — `packages/engine/src/events.js` — шина событий: EventBus.on / off / once / emit. Полностью изолирована, без зависимостей.
 - [x] **Тик 2** — `packages/engine/src/loop.js` — игровой цикл: rAF, фиксированный шаг симуляции (UPDATE_STEP=16мс), накопитель остатка, защита от прыжка (cap=5 шагов), пауза/возобновление. Обрабатывает visibilitychange (мута, пауза).
 - [x] **Тик 3** — `packages/engine/src/scenes.js` — менеджер сцен: register(name, scene), go(name, payload) с затемнением, push/pop для стека (пауза поверх геймплея), enter/exit хуки, предзагрузка следующей сцены через preload().
-- [ ] **Тик 4** — `packages/engine/src/input.js` — единый ввод мыши и тача: tap, long-press (500мс), swipe (порог 30px, 4 направления), drag (pointermove), pinch-zoom (2 пальца, расстояние). Нет контекстного меню, нет выделения текста.
+- [x] **Тик 4** — `packages/engine/src/input.js` — единый ввод мыши и тача: tap, long-press (500мс), swipe (порог 30px, 4 направления), drag (pointermove), pinch-zoom (2 пальца, расстояние). Нет контекстного меню, нет выделения текста.
 
 ## Платформенный адаптер
 

@@ -75,3 +75,20 @@ update(dt)/render(alpha): делегируют в активную сцену.
 - _stackNames() использует constructor.sceneName ?? constructor.name — тест нашёл баг:
   класс без sceneName давал имя класса, а не ключ реестра. Правильно — оба варианта OK,
   просто тест должен добавлять sceneName. Исправлено в тесте.
+
+---
+
+## 2026-08-03 — Тик 4: InputManager (src/input.js)
+
+**Что сделано:** написан `src/input.js` — единый ввод Pointer Events (mouse + touch).
+Жесты: tap, long-press (500мс таймер, отменяется при MOVE_THRESHOLD >10px), swipe (4 направления,
+>30px за <500мс), drag (continuous drag:start/drag:move/drag:end), pinch (2 пальца, scale).
+Тесты: 22 кейса, все зелёные. Регрессия 65 тестов — зелёные.
+
+**Решения:**
+- Pointer Events API унифицирует mouse+touch; trackpad+stylus тоже работает.
+- Drag и swipe могут сосуществовать: быстрое движение эмитит и drag:move, и swipe на release.
+  Это правильное поведение — сцена сама решает, что обрабатывать.
+- tap исключён при drag (state.dragging=true в проверке тапа).
+- _simulate*() методы для тестирования без DOM — прямой вызов обработчиков с fake-событиями.
+- style.touchAction='none' и contextmenu preventDefault — требование п. 1.6 площадки.
