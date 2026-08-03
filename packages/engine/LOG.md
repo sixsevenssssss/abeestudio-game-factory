@@ -209,3 +209,15 @@ canClaim: lastClaimTs < todayMidnight. Честный — не проверяе�
 weekAheadRewards: 7 наград от _rewardForStreak(streak+i) с цикличностью.
 now() инжектируется → полный контроль времени в тестах без setTimeout.
 Тесты: 29 кейсов. Регрессия 308 → зелёные. Итого 337.
+
+---
+
+## 2026-08-03 — Тик 13: AnalyticsSystem (src/analytics.js)
+
+**Что сделано:** написан `src/analytics.js`.
+event(name, params): буфер + journal. flush(): отправка в Platform + очистка буфера.
+Журнал: MockJournal / sessionStorage, последние 100. Таймер 30с (отключается в тестах flushIntervalMs:0).
+Стандартные события: sessionStart/End, firstSession, adWatched/Skipped, achievementUnlocked, purchase.
+Auto-events: подписка на EventBus achievements:unlocked, ads:rewarded:granted/end.
+sessionEnd и purchase вызывают flush() немедленно.
+Тесты: 31 кейс. Регрессия 337 → зелёные. Итого 368.
