@@ -1,13 +1,14 @@
 # STATE — abeeStudio · Фундамент
 
-## Статус: тик 1 завершён
+## Статус: тик 2 завершён
 
 ### Готово
 - [x] Тик 0 — структура памяти, PLAN, BACKLOG, STATE, LOG, API.md
-- [x] Тик 1 — `src/events.js` — EventBus (on/off/once/emit/clear/listenerCount), 17 тестов зелёные
+- [x] Тик 1 — `src/events.js` — EventBus, 17 тестов зелёные
+- [x] Тик 2 — `src/loop.js` — GameLoop (rAF/setTimeout, фиксированный шаг 16мс, накопитель, защита прыжка ×5, пауза, visibilitychange), 20 тестов зелёных
 
 ### В работе
-- (ничего — ждём следующего тика)
+- (ничего)
 
 ### Сломано
 - (ничего)
@@ -22,4 +23,4 @@
 - 0.0.0 (не выпущена)
 
 ### Следующий пункт бэклога
-- Тик 2: `src/loop.js` — игровой цикл (rAF, фиксированный шаг, защита от прыжка, пауза, visibilitychange)
+- Тик 3: `src/scenes.js` — менеджер сцен (register, go с затемнением, push/pop стек, enter/exit, preload)
