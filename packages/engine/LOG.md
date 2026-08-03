@@ -197,3 +197,15 @@ addProgress(id, delta): дельта поверх progress.
 Очередь уведомлений: showToast вызывается для каждого по очереди (TOAST_MS между ними).
 getAll() возвращает объединение def + state.
 Тесты: 28 кейсов. Регрессия 280 → зелёные. Итого 308.
+
+---
+
+## 2026-08-03 — Тик 12: DailySystem (src/daily.js)
+
+**Что сделано:** написан `src/daily.js`.
+UTC-полночь: _utcMidnight(ts) = floor(ts/DAY_MS)*DAY_MS.
+canClaim: lastClaimTs < todayMidnight. Честный — не проверяет часовой пояс клиента.
+Стрик: жив если last_claim >= yesterdayMidnight; сбрасывается при пропуске дня.
+weekAheadRewards: 7 наград от _rewardForStreak(streak+i) с цикличностью.
+now() инжектируется → полный контроль времени в тестах без setTimeout.
+Тесты: 29 кейсов. Регрессия 308 → зелёные. Итого 337.
