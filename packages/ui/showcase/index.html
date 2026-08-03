@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-abee-default dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>@abeestudio/ui — Витрина элементов</title>
+  <!-- Базовые стили и темы библиотеки -->
+  <link rel="stylesheet" href="../src/base/base.css">
+  <link rel="stylesheet" href="../src/themes/abee-default.css">
+  <link rel="stylesheet" href="../src/themes/crystal-light.css">
+  <link rel="stylesheet" href="../src/themes/cosmic-dark.css">
+  <link rel="stylesheet" href="../src/themes/meadow-warm.css">
+  <link rel="stylesheet" href="../src/themes/steel-sharp.css">
+  <!-- Стили витрины (не часть библиотеки) -->
+  <link rel="stylesheet" href="showcase.css">
+</head>
+<body>
+<div class="sc-layout">
+
+  <!-- ── Заголовок с переключателями ──────────────────────── -->
+  <header class="sc-header">
+    <div class="sc-brand">
+      <span class="sc-logo" aria-hidden="true">🎛️</span>
+      <span class="sc-name">@abeestudio/ui</span>
+      <span class="sc-ver">v0.0.4</span>
+    </div>
+
+    <nav class="sc-controls" aria-label="Переключатели витрины">
+
+      <div class="sc-group">
+        <div class="sc-group-label" data-i18n="ctrl.theme">Тема</div>
+        <div class="sc-row">
+          <button class="sc-btn sc-btn--on" data-theme="theme-abee-default"  title="abee-default">abee</button>
+          <button class="sc-btn"             data-theme="theme-crystal-light" title="crystal-light">crystal</button>
+          <button class="sc-btn"             data-theme="theme-cosmic-dark"   title="cosmic-dark">cosmic</button>
+          <button class="sc-btn"             data-theme="theme-meadow-warm"   title="meadow-warm">meadow</button>
+          <button class="sc-btn"             data-theme="theme-steel-sharp"   title="steel-sharp">steel</button>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-label" data-i18n="ctrl.variant">Вариант</div>
+        <div class="sc-row">
+          <button class="sc-btn sc-btn--on" data-variant="dark"  data-i18n="ctrl.dark">Тёмная</button>
+          <button class="sc-btn"            data-variant="light" data-i18n="ctrl.light">Светлая</button>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-label">Язык</div>
+        <div class="sc-row">
+          <button class="sc-btn sc-btn--on" data-lang="ru">RU</button>
+          <button class="sc-btn"            data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="sc-group">
+        <div class="sc-group-label" data-i18n="ctrl.viewport">Экран</div>
+        <div class="sc-row">
+          <button class="sc-btn"            data-viewport="phone"   title="360px">📱</button>
+          <button class="sc-btn"            data-viewport="tablet"  title="820px">📟</button>
+          <button class="sc-btn sc-btn--on" data-viewport="desktop" title="1440px">🖥</button>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ── Область прокрутки ─────────────────────────────────── -->
+  <div id="sc-frame" data-viewport="desktop">
+    <main id="sc-content">
+
+      <section class="sc-section" id="sec-buttons">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.buttons">Кнопки</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.buttons.desc">primary, secondary, danger, icon, price, ad-reward</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-forms">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.forms">Формы</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.forms.desc">переключатели, ползунки, поля ввода, чекбоксы</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-tabs">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.tabs">Вкладки</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.tabs.desc">горизонтальные вкладки</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-panels">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.panels">Панели и карточки</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.panels.desc">панель, карточка, кликабельная карточка</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-overlays">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.overlays">Оверлеи</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.overlays.desc">модальное окно, нижняя шторка, подсказки</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-notifications">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.notifications">Уведомления</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.notifications.desc">тост, баннер</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-progress">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.progress">Прогресс и счётчики</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.progress.desc">полосы прогресса, таймер, счётчик, бейдж, аватар</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-game">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.game">Игровые элементы</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.game.desc">награды, сундук, лидерборд, магазин</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+      <section class="sc-section" id="sec-effects">
+        <div class="sc-sec-head">
+          <h2 class="sc-sec-title" data-i18n="sec.effects">Эффекты и анимации</h2>
+          <p  class="sc-sec-desc"  data-i18n="sec.effects.desc">переходы, частицы, монеты, конфетти</p>
+        </div>
+        <div class="sc-items"><span class="sc-wip" data-i18n="wip">🚧 В разработке</span></div>
+      </section>
+
+    </main>
+  </div><!-- #sc-frame -->
+
+</div><!-- .sc-layout -->
+<script type="module" src="showcase.js"></script>
+</body>
+</html>

@@ -1,41 +1,37 @@
 # LOG — @abeestudio/ui
 
-## 2026-08-03 — Тик 3: базовые стили
+## 2026-08-03 — Тик 4: скелет витрины
 
-**Пункт бэклога:** «Базовые стили: src/base/base.css»
+**Пункт бэклога:** «Скелет витрины: showcase/index.html + showcase.js»
 
 **Что создано:**
-`src/base/base.css` — единственный файл, подключается первым в index.html игры перед темой.
+- `showcase/index.html` — 9 секций (Кнопки, Формы, Вкладки, Панели, Оверлеи, Уведомления, Прогресс, Игровые элементы, Эффекты). Все переключатели с data-атрибутами. Подключает все 5 тем и base.css через относительные пути.
+- `showcase/showcase.css` — стили витрины: адаптивный хедер с flex-wrap (работает на 360px без overflow), секции-карточки через CSS custom properties тем.
+- `showcase/showcase.js` — логика: `applyTheme()`, `applyLang()` с mock I18N (RU/EN), `applyViewport()`. Делегированный обработчик кликов.
+- `tools/check-showcase.py` — исправлен критический баг: раньше HTTP-сервер поднимался из `showcase/`, поэтому пути `../src/base/base.css` не работали. Теперь сервер из `packages/ui/` (pkg root), витрина доступна по `/showcase/`.
 
-**Реализованные требования Яндекс Игр:**
-- п. 1.6 — `user-select: none` на всём, `-webkit-touch-callout: none` (iOS контекстное меню),
-  `overflow: hidden` + `overscroll-behavior: none` на html/body (запрет скролла страницы),
-  `touch-action: none` на `<html>` (запрет pinch-zoom на странице)
-- п. 1.6 — `touch-action: manipulation` на button/a/input/etc. (убирает задержку 300ms)
-- Минимальные зоны нажатия: `min-height: 44px; min-width: 44px` на нативных button/a
-- `-webkit-tap-highlight-color: transparent` — убирает синюю вспышку на Android
-- `pointer-events: none` на img/canvas/svg (не перехватывают клики), с override `[data-interactive]`
+**Решение — mock L10n:**
+EN-строки намеренно длиннее RU (требование студии). Самая длинная секция в EN: «reward cards, chest reveal, daily rewards streak, achievement badge, leaderboard, shop, no-coins dialog» — в кнопках управления вместо «Тёмная/Светлая» идут «Dark/Light» (короче, OK).
 
-**prefers-reduced-motion:**
-Дублируем двумя путями: медиа-запрос (автоматически) + класс `.prefers-reduced-motion` на `<html>` (управляется из JS редьюсером, который будет в Фазе 7). Анимации сокращаются до 1ms, а не удаляются — плавные ≠ обязательные.
+**Решение — overflow на 360px:**
+`flex-wrap: wrap` на `.sc-controls` и `.sc-row`. Каждая группа переключателей переносится на новую строку. `overflow: hidden` на `.sc-header` — страховка. Проверено Playwright — ноль overflow на 360px.
 
-**Безопасные зоны:** классы `.ui-safe-top/bottom/left/right/all` для явного применения в компонентах (BottomSheet использует `ui-safe-bottom`).
+**Проверка:** check-showcase.py — код 0. 2 темы × 3 viewport, ноль ошибок консоли, ноль overflow, все зоны нажатия ≥ 44px, EN не ломает вёрстку.
 
-**Внутренний скролл:** `.ui-scroll` и `.ui-scroll-x` — стандартные классы для прокручиваемых областей (без `scrollbar`-ов, с `overscroll-behavior: contain`).
+---
 
-**Решение — pointer-events на изображениях:**
-По умолчанию `pointer-events: none` на img/canvas/svg — игра не должна кликаться «насквозь» через оверлеи. Если элемент должен принимать клики, добавляем `data-interactive`.
+## 2026-08-03 — Тик 3: базовые стили
 
-**Проверка:** check-showcase.py — код 0 (витрины ещё нет).
+`src/base/base.css` — п. 1.6 Яндекс Игр: запрет меню/выделения/скролла/pinch-zoom, safe-area, reduced-motion, зоны ≥ 44px.
 
 ---
 
 ## 2026-08-03 — Тик 2: система тем
 
-Создано 5 тем × dark/light: abee-default (янтарь), crystal-light (индиго), cosmic-dark (фиолет), meadow-warm (зелёный), steel-sharp (циан). `switchTheme()`, `getCurrentTheme()`, `AVAILABLE_THEMES`.
+5 тем × dark/light. `switchTheme()`, `getCurrentTheme()`. CSS custom properties.
 
 ---
 
 ## 2026-08-03 — Тик 1: bootstrap
 
-Структура пакета, PLAN.md (7 фаз), BACKLOG.md (35+ пунктов), tools/check-showcase.py (Playwright через PyPI — npm заблокирован 403).
+Структура пакета, PLAN.md (7 фаз), BACKLOG.md (35+ пунктов), tools/check-showcase.py.

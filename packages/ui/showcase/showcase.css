@@ -1,0 +1,173 @@
+/*
+ * showcase.css — стили витрины @abeestudio/ui
+ * НЕ является частью библиотеки. Использует CSS custom properties из тем.
+ */
+
+/* ── LAYOUT ─────────────────────────────────────────────────
+   html/body: overflow:hidden задан base.css (требование Яндекс Игр).
+   Витрина соблюдает то же ограничение — скролл через #sc-frame.        */
+.sc-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.sc-header {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 16px;
+  padding: 10px 12px;
+  background: var(--ui-bg-2, #16213e);
+  border-bottom: 1px solid var(--ui-border, rgba(255,255,255,0.10));
+  overflow: hidden; /* страховка: ничего не вылезет из хедера */
+}
+
+.sc-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+.sc-logo { font-size: 20px; line-height: 1; pointer-events: none; }
+.sc-name { font-size: var(--ui-fs-md, 16px); font-weight: var(--ui-fw-b, 700); color: var(--ui-text); white-space: nowrap; }
+.sc-ver  { font-size: var(--ui-fs-xs, 11px); color: var(--ui-text-2); }
+
+/* ── CONTROLS ─────────────────────────────────────────────── */
+.sc-controls {
+  display: flex;
+  flex-wrap: wrap;      /* группы переносятся на узких экранах */
+  gap: 10px 16px;
+  align-items: flex-start;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sc-group-label {
+  font-size: var(--ui-fs-xs, 11px);
+  color: var(--ui-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.sc-row {
+  display: flex;
+  flex-wrap: wrap;  /* кнопки переносятся — никогда не создают горизонтального переполнения */
+  gap: 4px;
+  min-width: 0;
+}
+
+/* ── CONTROL BUTTONS ──────────────────────────────────────── */
+.sc-btn {
+  /* Минимальная зона нажатия ≥ 44px */
+  min-height: 44px;
+  min-width:  44px;
+  padding: 0 10px;
+
+  background: var(--ui-surface, rgba(255,255,255,0.07));
+  border: 1px solid var(--ui-border, rgba(255,255,255,0.10));
+  border-radius: var(--ui-r-sm, 8px);
+  color: var(--ui-text-2);
+  font-size: var(--ui-fs-sm, 13px);
+  font-family: var(--ui-font, system-ui, sans-serif);
+  font-weight: var(--ui-fw-m, 500);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background var(--ui-dur, 200ms) var(--ui-ease),
+              border-color var(--ui-dur, 200ms) var(--ui-ease),
+              color var(--ui-dur, 200ms) var(--ui-ease);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sc-btn:hover {
+  background: var(--ui-surface-2, rgba(255,255,255,0.13));
+  color: var(--ui-text);
+  border-color: var(--ui-border-2, rgba(255,255,255,0.18));
+}
+
+.sc-btn--on {
+  background: var(--ui-primary-surface, rgba(240,165,0,0.16));
+  color: var(--ui-primary, #f0a500);
+  border-color: var(--ui-primary, #f0a500);
+}
+
+/* ── CONTENT FRAME ────────────────────────────────────────── */
+#sc-frame {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#sc-frame::-webkit-scrollbar { display: none; }
+
+#sc-content {
+  padding: 16px 12px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Viewport-режимы: ограничивают ширину контента для предпросмотра */
+#sc-frame[data-viewport="phone"]   #sc-content { max-width: 360px; margin: 0 auto; }
+#sc-frame[data-viewport="tablet"]  #sc-content { max-width: 820px; margin: 0 auto; }
+#sc-frame[data-viewport="desktop"] #sc-content { max-width: 1200px; margin: 0 auto; }
+
+/* ── SECTIONS ─────────────────────────────────────────────── */
+.sc-section {
+  margin-bottom: 20px;
+  background: var(--ui-surface, rgba(255,255,255,0.07));
+  border: 1px solid var(--ui-border, rgba(255,255,255,0.10));
+  border-radius: var(--ui-r-md, 14px);
+  overflow: hidden;
+}
+
+.sc-sec-head {
+  padding: 14px 16px 10px;
+}
+
+.sc-sec-title {
+  font-size: var(--ui-fs-lg, 20px);
+  font-weight: var(--ui-fw-b, 700);
+  color: var(--ui-text);
+  line-height: 1.2;
+}
+
+.sc-sec-desc {
+  margin-top: 4px;
+  font-size: var(--ui-fs-sm, 13px);
+  color: var(--ui-text-2);
+}
+
+.sc-items {
+  padding: 16px;
+  border-top: 1px solid var(--ui-border, rgba(255,255,255,0.10));
+  min-height: 72px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.sc-wip {
+  color: var(--ui-text-3, rgba(238,238,242,0.30));
+  font-size: var(--ui-fs-sm, 13px);
+  font-style: italic;
+  align-self: center;
+}

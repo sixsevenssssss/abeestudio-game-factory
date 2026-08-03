@@ -8,7 +8,7 @@
 - [x] Первый тик: структура пакета, PLAN.md, BACKLOG.md, STATE.md, LOG.md, API.md, скелет src/index.js + package.json, tools/check-showcase.py
 - [x] Система тем: src/themes/index.js + 5 CSS-файлов тем × light/dark, switchTheme(), getCurrentTheme()
 - [x] Базовые стили: src/base/base.css — запрет контекстного меню / выделения текста / скролла страницы, touch-action: manipulation, safe-area-inset, prefers-reduced-motion
-- [ ] Скелет витрины: showcase/index.html + showcase.js — переключатели темы/lang/viewport, mock L10n, пустые секции под все группы элементов
+- [x] Скелет витрины: showcase/index.html + showcase.js + showcase.css — переключатели темы/lang/viewport, mock L10n, 9 пустых секций под все группы элементов
 
 ---
 
