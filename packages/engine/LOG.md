@@ -110,3 +110,20 @@ initPlatform() автоопределяет среду (Node.js → мок, бр
 - overridePlayer() / overrideRewardedResult() / seedCloudData() — для тестов систем
   которые зависят от Platform (Save, Ads, Achievements).
 - initPlatform() проверяет window.YaGames — единая точка инициализации для engine.
+
+---
+
+## 2026-08-03 — Тик 6: YandexPlatform (src/platform/yandex.js)
+
+**Что сделано:** написан `src/platform/yandex.js` — боевой адаптер над реальным ysdk.
+Тонкая обёртка: environment, adv, leaderboard делегируют в ysdk.
+initPlayer() / initPayments() — ленивые async-инициализаторы с кешем.
+game_api_pause/resume → platform:pause/resume на EventBus (п. 4.7 площадки).
+visibilitychange → platform:hidden/visible на EventBus (п. 1.3 площадки).
+Тесты с fake-ysdk: 23 кейса, зелёные. Регрессия 131 → зелёные. Итого 154.
+
+**Решения:**
+- Адаптер НЕ вызывает Audio.duck() или loop.pause() напрямую — только эмитит
+  на EventBus. Engine.start() wire-ует обработчики. Правильное разделение слоёв.
+- leaderboard потребовал getLeaderboards() — обёрнут в lazy-init со shared _lb.
+- Fake-ysdk для тестов использует duck typing — проверяет интерфейс без реального SDK.

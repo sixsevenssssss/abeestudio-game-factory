@@ -13,7 +13,7 @@
 ## Платформенный адаптер
 
 - [x] **Тик 5** — `packages/engine/src/platform/mock.js` — полный мок ysdk: YandexGames.init() → Promise, реклама (rewarded / interstitial) с симуляцией задержки, player (авторизация мок), getCloudData / setCloudData (localStorage), leaderboard (мок), purchases (мок), environment.i18n.lang → 'ru', features.GamesAPI, LoadingAPI.ready(), shortcut.canShow/show, review.canReview/requestReview. Все методы предсказуемы и возвращают данные.
-- [ ] **Тик 6** — `packages/engine/src/platform/yandex.js` — боевой адаптер: тонкая обёртка над window.ysdk, тот же интерфейс что и у мока, обрабатывает game_api_pause / game_api_resume (пауза + звук), visibilitychange.
+- [x] **Тик 6** — `packages/engine/src/platform/yandex.js` — боевой адаптер: тонкая обёртка над window.ysdk, тот же интерфейс что и у мока, обрабатывает game_api_pause / game_api_resume (пауза + звук), visibilitychange.
 
 ## Игровые системы
 
