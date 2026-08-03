@@ -2,32 +2,31 @@
  * Button — кнопка @abeestudio/ui
  * src/components/Button.js
  *
- * Использование:
- *   import { Button } from '../ui/src/components/Button.js';
+ * Варианты: 'primary' | 'secondary' | 'danger' | 'icon' | 'price' | 'ad'
  *
- *   const btn = Button({
- *     label:    L10n.t('ui.btn.start'),  // переведённая строка
- *     variant:  'primary',               // 'primary'|'secondary'|'danger'|'icon'
- *     disabled: false,
- *     loading:  false,
- *     icon:     '<svg>...</svg>',        // опционально
- *     id:       'start-btn',            // для событий
- *     onClick:  () => startGame(),
- *   });
- *   container.appendChild(btn);
+ * Пример — кнопка с ценой:
+ *   Button({ label: L10n.t('ui.buy'), variant: 'price', price: '100 🪙', icon: COIN_SVG })
+ *
+ * Пример — кнопка рекламы:
+ *   Button({ label: L10n.t('ui.watch_ad'), variant: 'ad' })
+ *   // icon по умолчанию — треугольник воспроизведения
  *
  * Событие на document: 'ui:button:click'  { detail: { id, variant } }
  */
 
 let _stylesLoaded = false;
 
+// SVG-иконка воспроизведения по умолчанию для варианта 'ad'
+const _AD_ICON_DEFAULT = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>`;
+
 /**
  * @param {object}   opts
  * @param {string}   opts.label
- * @param {'primary'|'secondary'|'danger'|'icon'} [opts.variant='primary']
+ * @param {'primary'|'secondary'|'danger'|'icon'|'price'|'ad'} [opts.variant='primary']
  * @param {boolean}  [opts.disabled=false]
  * @param {boolean}  [opts.loading=false]
- * @param {string}   [opts.icon=null]     — SVG-строка иконки
+ * @param {string}   [opts.icon=null]   — SVG-строка иконки (для ad: используется _AD_ICON_DEFAULT если не задана)
+ * @param {string}   [opts.price=null]  — строка цены только для variant='price' (напр. '100 🪙')
  * @param {string}   [opts.id=null]
  * @param {function} [opts.onClick=null]
  * @returns {HTMLButtonElement}
@@ -38,6 +37,7 @@ export function Button({
   disabled = false,
   loading  = false,
   icon     = null,
+  price    = null,
   id       = null,
   onClick  = null,
 } = {}) {
@@ -48,27 +48,38 @@ export function Button({
   btn.className = `ui-btn ui-btn--${variant}`;
   if (id) btn.dataset.id = id;
 
-  // Иконка (опционально, для любого варианта; обязательна для 'icon')
-  if (icon) {
+  // Для 'ad' — использовать иконку по умолчанию если не передана
+  const effectiveIcon = variant === 'ad' ? (icon ?? _AD_ICON_DEFAULT) : icon;
+
+  // Иконка
+  if (effectiveIcon) {
     const iconEl = document.createElement('span');
     iconEl.className = 'ui-btn__icon';
     iconEl.setAttribute('aria-hidden', 'true');
-    iconEl.innerHTML = icon;
+    iconEl.innerHTML = effectiveIcon;
     btn.appendChild(iconEl);
   }
 
-  // Текст (не показываем для варианта 'icon')
+  // Текст (не показываем для 'icon')
   if (variant !== 'icon' && label) {
     const labelEl = document.createElement('span');
     labelEl.className = 'ui-btn__label';
     labelEl.textContent = label;
     btn.appendChild(labelEl);
   } else if (variant === 'icon') {
-    // aria-label для доступности кнопки-иконки
     if (label) btn.setAttribute('aria-label', label);
   }
 
-  // Спиннер — скрыт в обычном состоянии, виден при loading
+  // Бейдж цены (только для 'price')
+  if (variant === 'price' && price != null) {
+    const priceEl = document.createElement('span');
+    priceEl.className = 'ui-btn__price';
+    priceEl.textContent = price;
+    priceEl.setAttribute('aria-label', price);
+    btn.appendChild(priceEl);
+  }
+
+  // Спиннер — скрыт в обычном состоянии
   const spinner = document.createElement('span');
   spinner.className = 'ui-btn__spinner';
   spinner.setAttribute('aria-hidden', 'true');
@@ -84,7 +95,7 @@ export function Button({
     btn.disabled = true;
   }
 
-  // Обработчик клика
+  // Клик
   btn.addEventListener('click', e => {
     if (btn.disabled) return;
     onClick?.(e);
@@ -100,13 +111,17 @@ export function Button({
 /**
  * Обновляет кнопку без перерендеринга.
  * @param {HTMLButtonElement} btn
- * @param {{ label?, disabled?, loading? }} changes
+ * @param {{ label?, price?, disabled?, loading? }} changes
  */
-export function updateButton(btn, { label, disabled, loading } = {}) {
+export function updateButton(btn, { label, price, disabled, loading } = {}) {
   if (label !== undefined) {
     const el = btn.querySelector('.ui-btn__label');
     if (el) el.textContent = label;
-    if (btn.dataset.variant === 'icon') btn.setAttribute('aria-label', label);
+    if (btn.classList.contains('ui-btn--icon')) btn.setAttribute('aria-label', label);
+  }
+  if (price !== undefined) {
+    const el = btn.querySelector('.ui-btn__price');
+    if (el) el.textContent = price;
   }
   if (loading !== undefined) {
     btn.classList.toggle('ui-btn--loading', loading);

@@ -6,19 +6,16 @@
 
 /* ── БАЗОВЫЕ СТИЛИ ───────────────────────────────────────── */
 .ui-btn {
-  /* Минимальная зона нажатия ≥ 44px (требование Яндекс Игр п. 1.6) */
   min-height: 44px;
   min-width:  44px;
   padding: 0 20px;
 
-  /* Layout */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   position: relative;
 
-  /* Typography */
   font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
   font-size:   var(--ui-fs-md, 16px);
   font-weight: var(--ui-fw-m,  500);
@@ -26,11 +23,9 @@
   white-space: nowrap;
   text-align: center;
 
-  /* Visual */
   border: 1px solid transparent;
   border-radius: var(--ui-r-md, 14px);
 
-  /* Поведение */
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -38,7 +33,6 @@
   -webkit-user-select: none;
   outline: none;
 
-  /* Переходы */
   transition:
     background-color var(--ui-dur, 200ms) var(--ui-ease, ease),
     border-color     var(--ui-dur, 200ms) var(--ui-ease, ease),
@@ -48,7 +42,6 @@
     opacity          var(--ui-dur, 200ms) var(--ui-ease, ease);
 }
 
-/* Кольцо фокуса — только при клавиатурной навигации */
 .ui-btn:focus-visible {
   outline: 2px solid var(--ui-primary, #f0a500);
   outline-offset: 3px;
@@ -63,7 +56,7 @@
 .ui-btn--primary:hover:not([disabled]):not(.ui-btn--loading) {
   background:   var(--ui-primary-hover, #ffb71b);
   border-color: var(--ui-primary-hover, #ffb71b);
-  box-shadow:   var(--ui-shadow-glow,   0 0 24px rgba(240,165,0,0.40));
+  box-shadow:   var(--ui-shadow-glow);
   transform: translateY(-1px);
 }
 .ui-btn--primary:active:not([disabled]):not(.ui-btn--loading) {
@@ -121,6 +114,78 @@
 .ui-btn--icon:active:not([disabled]):not(.ui-btn--loading) {
   background: var(--ui-secondary-active, rgba(255 255 255 / 0.08));
 }
+/* Loading: скрываем иконку, показываем только спиннер */
+.ui-btn--icon.ui-btn--loading .ui-btn__icon { display: none; }
+
+/* ── PRICE — кнопка с ценой ──────────────────────────────── */
+.ui-btn--price {
+  background:   var(--ui-surface-2,  rgba(255 255 255 / 0.13));
+  color:        var(--ui-text,       #eeeef2);
+  border-color: var(--ui-border,     rgba(255 255 255 / 0.10));
+  /* Выравниваем контент: label слева, цена справа */
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 6px 0 16px;
+  min-width: 120px; /* цена не должна прижимать метку */
+}
+.ui-btn--price:hover:not([disabled]):not(.ui-btn--loading) {
+  background:   var(--ui-surface-3, rgba(255 255 255 / 0.20));
+  border-color: var(--ui-primary,   #f0a500);
+  box-shadow:   var(--ui-shadow-glow);
+  transform: translateY(-1px);
+}
+.ui-btn--price:active:not([disabled]):not(.ui-btn--loading) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Бейдж цены */
+.ui-btn__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  min-height: 32px;
+  border-radius: var(--ui-r-sm, 8px);
+  background:  var(--ui-primary,      #f0a500);
+  color:       var(--ui-primary-text, #1a1a2e);
+  font-size:   var(--ui-fs-sm, 13px);
+  font-weight: var(--ui-fw-b, 700);
+  white-space: nowrap;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* ── AD — кнопка рекламы ─────────────────────────────────── */
+.ui-btn--ad {
+  background:   var(--ui-surface,  rgba(255 255 255 / 0.07));
+  color:        var(--ui-text,     #eeeef2);
+  border-color: var(--ui-primary,  #f0a500);
+  /* Пульсация призыва к действию */
+  animation: ui-btn-ad-pulse 2.4s ease-in-out infinite;
+}
+.ui-btn--ad:hover:not([disabled]):not(.ui-btn--loading) {
+  background:  var(--ui-primary-surface, rgba(240 165 0 / 0.16));
+  box-shadow:  var(--ui-shadow-glow);
+  transform:   translateY(-1px);
+  animation:   none; /* пауза пульса при hover */
+}
+.ui-btn--ad:active:not([disabled]):not(.ui-btn--loading) {
+  transform: translateY(0);
+  box-shadow: none;
+  animation: none;
+}
+
+@keyframes ui-btn-ad-pulse {
+  0%, 100% { box-shadow: 0 0  0   0   var(--ui-primary-surface, rgba(240 165 0 / 0.16)); }
+  50%       { box-shadow: 0 0 12px 4px var(--ui-primary-surface, rgba(240 165 0 / 0.28)); }
+}
+
+/* Уважаем prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .ui-btn--ad { animation: none; }
+}
+.prefers-reduced-motion .ui-btn--ad { animation: none; }
 
 /* ── DISABLED ─────────────────────────────────────────────── */
 .ui-btn[disabled],
@@ -131,19 +196,18 @@
   transform: none !important;
   box-shadow: none !important;
   filter: none !important;
+  animation: none !important;
 }
 
 /* ── LOADING ──────────────────────────────────────────────── */
 .ui-btn--loading {
   cursor: not-allowed;
   pointer-events: none;
+  animation: none !important;
 }
 .ui-btn--loading .ui-btn__label { opacity: 0.55; }
 .ui-btn--loading .ui-btn__icon  { opacity: 0.55; }
-
-/* В кнопке-иконке при loading скрываем иконку — показываем только спиннер,
-   иначе gap + icon + spinner переполняют фиксированную ширину кнопки */
-.ui-btn--icon.ui-btn--loading .ui-btn__icon { display: none; }
+.ui-btn--loading .ui-btn__price { opacity: 0.55; }
 
 /* ── CHILDREN ─────────────────────────────────────────────── */
 .ui-btn__icon {
@@ -162,13 +226,7 @@
   display: block;
 }
 
-.ui-btn__label {
-  pointer-events: none;
-  /* Предотвращаем обрезание длинных строк */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 240px; /* страховка от слишком длинного текста */
-}
+.ui-btn__label { pointer-events: none; }
 
 /* ── SPINNER ──────────────────────────────────────────────── */
 .ui-btn__spinner {
@@ -181,7 +239,6 @@
   flex-shrink: 0;
   pointer-events: none;
 }
-
 .ui-btn--loading .ui-btn__spinner {
   display: block;
   animation: ui-btn-spin var(--ui-dur-s, 380ms) linear infinite;
@@ -190,10 +247,6 @@
 @keyframes ui-btn-spin {
   to { transform: rotate(360deg); }
 }
-
-/* prefers-reduced-motion — не убираем анимацию совсем, просто ускоряем */
 @media (prefers-reduced-motion: reduce) {
-  .ui-btn--loading .ui-btn__spinner {
-    animation-duration: 1s;
-  }
+  .ui-btn--loading .ui-btn__spinner { animation-duration: 1s; }
 }

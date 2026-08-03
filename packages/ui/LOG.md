@@ -1,27 +1,32 @@
 # LOG — @abeestudio/ui
 
-## 2026-08-03 — Тик 5: Button.js
+## 2026-08-03 — Тик 6: варианты price + ad
 
-**Пункт бэклога:** «Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина»
+**Пункт бэклога:** «Кнопки: price и ad-reward + витрина»
 
-**Что создано:**
+**Что изменено:**
 
-- `src/components/Button.js` — функция `Button(opts)`, возвращает `HTMLButtonElement`. Автоматически подключает `Button.css` через `_loadStyles()` (инжектирует `<link>` при первом вызове). Варианты: primary, secondary, danger, icon. Состояния: default, disabled, loading. Событие `ui:button:click` на document. `updateButton(btn, changes)` для обновления без перерендеринга.
-- `src/components/Button.css` — все стили через CSS custom properties тем. Hover/active/disabled/loading. Спиннер `@keyframes ui-btn-spin`. Кольцо фокуса `:focus-visible`.
-- `src/ui-object.js` — объект `UI` со всеми экспортами для удобного `import { UI } from '../ui/index.js'`.
-- `src/index.js` — обновлён: экспортирует `Button`, `updateButton`, `switchTheme`, `getCurrentTheme`, `AVAILABLE_THEMES`, `UI`.
-- `showcase/showcase.js` — добавлен импорт Button, функция `initButtons()` (4×3 матрица: 4 варианта × 3 состояния).
-- `showcase/showcase.css` — добавлены стили для демо-группировки (`.sc-demo-group`, `.sc-demo-row`, `.sc-demo-variant`).
+- `src/components/Button.js` — добавлен параметр `price` (строка для отображения в бейдже). `ad`-вариант использует иконку по умолчанию (`_AD_ICON_DEFAULT` — SVG треугольника воспроизведения), которую можно переопределить через `icon`. `updateButton` теперь поддерживает обновление `price`.
+- `src/components/Button.css` — добавлены два варианта:
+  - `.ui-btn--price`: `justify-content: space-between`, `min-width: 120px`, стиль бейджа `.ui-btn__price` (фон primary, контрастный текст).
+  - `.ui-btn--ad`: мягкая пульсирующая анимация `ui-btn-ad-pulse` (box-shadow ← → primary-surface), пауза при hover, отключается при `prefers-reduced-motion` и `.prefers-reduced-motion`.
+- `showcase/showcase.js` — рефакторинг: единая фабрика `_demoGroup(variant, labelKey, opts)`, 6 вариантов в секции «Кнопки».
 
-**Найденный и исправленный баг:**
+**Яндекс Игры п. 1.16:** `ad`-кнопка инициирует НАСТОЯЩУЮ рекламу через `Ads.rewarded()` — это разрешено. Пульсация привлекает внимание, но не провоцирует случайный клик. В витрине используется демо без реальной рекламы.
 
-При loading у `ui-btn--icon`: иконка (20px) + gap (8px) + спиннер (18px) = 46px ≥ inner width (46px), что давало 3px overflow в scrollWidth. Исправлено: `.ui-btn--icon.ui-btn--loading .ui-btn__icon { display: none }` — в loading скрываем иконку, показываем только спиннер (18px << 46px).
+**Проверка:** check-showcase.py — код 0. 2 темы × 3 viewport × RU+EN.
+
+---
+
+## 2026-08-03 — Тик 5: Button.js (primary/secondary/danger/icon)
+
+Первый реальный компонент. Исправлен icon+loading overflow (3px).
 
 ---
 
 ## 2026-08-03 — Тик 4: скелет витрины
 
-showcase/index.html + showcase.js + showcase.css. Исправлен HTTP-сервер (из pkg root). Playwright прошёл.
+showcase/index.html + showcase.js + showcase.css. Исправлен HTTP-сервер.
 
 ---
 
@@ -39,4 +44,4 @@ src/base/base.css — п. 1.6 Яндекс Игр.
 
 ## 2026-08-03 — Тик 1: bootstrap
 
-Структура пакета, PLAN.md, BACKLOG.md, check-showcase.py.
+Структура пакета, PLAN.md, BACKLOG.md, tools/check-showcase.py.
