@@ -1,0 +1,255 @@
+/*
+ * @abeestudio/ui — базовые стили
+ * src/base/base.css
+ *
+ * Подключать ОДИН РАЗ в index.html игры, ПЕРЕД темой:
+ *   <link rel="stylesheet" href="ui/src/base/base.css">
+ *   <link rel="stylesheet" href="ui/src/themes/abee-default.css">
+ *
+ * Реализует обязательные требования Яндекс Игр:
+ *   п. 1.6 — нет контекстного меню, выделения текста, скролла страницы
+ *   п. 1.19.2 — готовность к отображению (сброс стилей)
+ *   prefers-reduced-motion — уважение системного запроса (+ ручной тумблер)
+ */
+
+/* ── СБРОС ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── СТРАНИЦА — ПОЛНЫЙ ЭКРАН, БЕЗ СКРОЛЛА ─────────────────── */
+/* Яндекс Игры п. 1.6: нет скролла страницы                   */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;         /* запрет скролла страницы */
+  overscroll-behavior: none; /* запрет pull-to-refresh и жеста «назад» */
+}
+
+html {
+  /* Запрет pinch-zoom на уровне страницы */
+  touch-action: none;
+}
+
+body {
+  font-family: var(--ui-font, system-ui, -apple-system, 'Segoe UI', sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  line-height: var(--ui-lh, 1.4);
+  color:       var(--ui-text, #eeeef2);
+  background:  var(--ui-bg,   #1a1a2e);
+
+  /* Сглаживание шрифтов */
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering:          optimizeLegibility;
+}
+
+/* ── ЗАПРЕТ ВЫДЕЛЕНИЯ ТЕКСТА (п. 1.6) ─────────────────────── */
+* {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+/* Разрешаем только в полях ввода */
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+}
+
+/* ── ЗАПРЕТ КОНТЕКСТНОГО МЕНЮ (п. 1.6) ────────────────────── */
+/* Долгое нажатие на iOS: без «Скопировать», «Открыть в новой вкладке» */
+* {
+  -webkit-touch-callout: none;
+}
+
+/* Убираем синюю/серую подсветку нажатия на iOS/Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ ──────────────────────────────── */
+/*
+  touch-action: manipulation — убирает задержку 300ms на мобильном,
+  запрещает pinch-zoom именно на этом элементе (не глобально).
+  Применяется ко всем элементам, которые принимают ввод.
+*/
+button,
+a,
+[role="button"],
+[data-tap],
+input[type="range"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+label {
+  touch-action: manipulation;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Сброс стилей кнопок */
+button {
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+}
+
+/* Сброс стилей ссылок */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── МИНИМАЛЬНЫЕ ЗОНЫ НАЖАТИЯ ≥ 44px ──────────────────────── */
+/*
+  Требование площадки: зоны нажатия не меньше 44×44 px.
+  Компоненты @abeestudio/ui задают min-height явно.
+  Это правило — страховка для встроенных элементов HTML.
+  Используем padding вместо min-width/height чтобы не сломать вёрстку.
+*/
+button:not([data-ui-no-expand]),
+a:not([data-ui-no-expand]) {
+  min-height: 44px;
+  min-width:  44px;
+}
+
+/* ── ФОКУС ─────────────────────────────────────────────────── */
+/* Показываем ring только при навигации с клавиатуры */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline:        2px solid var(--ui-primary, #f0a500);
+  outline-offset: 2px;
+  border-radius:  var(--ui-r-sm, 6px);
+}
+
+/* ── ИЗОБРАЖЕНИЯ, CANVAS, SVG ─────────────────────────────── */
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  -webkit-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
+  /* Картинки не перехватывают клики (только если не помечены) */
+  pointer-events: none;
+}
+
+/* Явно разрешить pointer-events для интерактивных canvas/svg */
+canvas[data-interactive],
+svg[data-interactive],
+img[data-interactive] {
+  pointer-events: auto;
+}
+
+/* ── БЕЗОПАСНЫЕ ЗОНЫ (iPhone notch, Dynamic Island) ────────── */
+/*
+  Классы для ручного применения в компонентах.
+  BottomSheet и нижние кнопки используют ui-safe-bottom.
+*/
+.ui-safe-top    { padding-top:    env(safe-area-inset-top,    0px); }
+.ui-safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.ui-safe-left   { padding-left:   env(safe-area-inset-left,   0px); }
+.ui-safe-right  { padding-right:  env(safe-area-inset-right,  0px); }
+
+/* Вспомогательный блок-обёртка с учётом всех безопасных зон */
+.ui-safe-all {
+  padding-top:    env(safe-area-inset-top,    0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left:   env(safe-area-inset-left,   0px);
+  padding-right:  env(safe-area-inset-right,  0px);
+}
+
+/* ── PREFERS-REDUCED-MOTION ──────────────────────────────── */
+/*
+  Дублируем двумя путями для надёжности:
+  1) Медиа-запрос — работает автоматически при системных настройках
+  2) CSS-класс .prefers-reduced-motion на <html> — управляется из JS
+     (см. reduceMotion() в effects/index.js, Фаза 7)
+  При «редком движении» длительности сокращаются до 1ms (фактически мгновенно),
+  но переходы не удаляются совсем — это было бы плохим UX.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        1ms !important;
+    animation-iteration-count: 1  !important;
+    transition-duration:       1ms !important;
+    scroll-behavior:           auto !important;
+  }
+}
+
+.prefers-reduced-motion *,
+.prefers-reduced-motion *::before,
+.prefers-reduced-motion *::after {
+  animation-duration:        1ms !important;
+  animation-iteration-count: 1  !important;
+  transition-duration:       1ms !important;
+  scroll-behavior:           auto !important;
+}
+
+/* ── ВНУТРЕННИЙ СКРОЛЛ В КОМПОНЕНТАХ ─────────────────────── */
+/*
+  Скролл СТРАНИЦЫ запрещён, но внутри компонентов (ScrollList, BottomSheet)
+  он разрешён. Базовый класс для прокручиваемых областей:
+*/
+.ui-scroll {
+  overflow-y:                 auto;
+  overflow-x:                 hidden;
+  overscroll-behavior-y:      contain;   /* не всплывает к body */
+  -webkit-overflow-scrolling: touch;     /* инерционный скролл iOS */
+  scrollbar-width:            none;      /* скрытый скроллбар Firefox */
+}
+.ui-scroll::-webkit-scrollbar {
+  display: none;                         /* скрытый скроллбар Chrome/Safari */
+}
+
+/* Горизонтальный скролл для лент (DailyRewards, ScrollList horizontal) */
+.ui-scroll-x {
+  overflow-x:                 auto;
+  overflow-y:                 hidden;
+  overscroll-behavior-x:      contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width:            none;
+}
+.ui-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── УТИЛИТЫ ─────────────────────────────────────────────── */
+.ui-hidden    { display: none !important; }
+.ui-invisible { visibility: hidden !important; }
+.ui-no-events { pointer-events: none !important; }
+
+/* Доступность: только для screen reader, невидимо */
+.ui-sr-only {
+  position:   absolute;
+  width:      1px;
+  height:     1px;
+  padding:    0;
+  margin:     -1px;
+  overflow:   hidden;
+  clip:       rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border:     0;
+}
+
+/* ── RESET СПИСКОВ ─────────────────────────────────────────── */
+ul, ol {
+  list-style: none;
+}

@@ -4,93 +4,70 @@
 
 ---
 
-## Подключение
+## Подключение в index.html игры
 
-```js
-import { UI }          from '../ui/index.js';
-import { switchTheme } from '../ui/src/themes/index.js';
-import { Button }      from '../ui/src/components/Button.js'; // (появится в Фазе 2)
+```html
+<!-- 1. Базовые стили (первыми, обязательно) -->
+<link rel="stylesheet" href="ui/src/base/base.css">
+
+<!-- 2. Тема игры -->
+<link rel="stylesheet" href="ui/src/themes/abee-default.css">
+
+<!-- 3. Точка входа игры -->
+<script type="module" src="src/game/main.js"></script>
 ```
 
 ---
 
-## Система тем
+## src/base/base.css
 
-### HTML
+Обязательный CSS, реализует требования Яндекс Игр:
 
-```html
-<!-- В index.html игры — подключить нужные темы: -->
-<link rel="stylesheet" href="ui/src/themes/abee-default.css">
-```
+- **Нет контекстного меню** — `-webkit-touch-callout: none`
+- **Нет выделения текста** — `user-select: none` (разрешено в `input`/`textarea`)
+- **Нет скролла страницы** — `html, body { overflow: hidden; overscroll-behavior: none }`
+- **Нет pinch-zoom** — `html { touch-action: none }`
+- **Быстрый отклик** — `touch-action: manipulation` на button/a/input
+- **Зоны нажатия ≥ 44px** — `min-height/width: 44px` на нативных button/a
+- **prefers-reduced-motion** — медиа-запрос + класс `.prefers-reduced-motion` на `<html>`
+- **Безопасные зоны** — `.ui-safe-top/bottom/left/right/all`
+- **Внутренний скролл** — `.ui-scroll`, `.ui-scroll-x` (не страница)
+- **Утилиты** — `.ui-hidden`, `.ui-invisible`, `.ui-sr-only`
 
-### JS
+---
+
+## Система тем (src/themes/)
 
 ```js
 import { switchTheme, getCurrentTheme, AVAILABLE_THEMES } from '../ui/src/themes/index.js';
 
-// Переключить тему (мгновенно, без перезагрузки):
-switchTheme('abee-default');        // тёмный вариант
-switchTheme('abee-default', true);  // светлый вариант
-
-// Получить текущую:
+switchTheme('cosmic-dark');
+switchTheme('abee-default', true); // true = светлый вариант
 getCurrentTheme(); // → { name: 'abee-default', light: false }
 
-// Слушать смену темы (из игровой логики):
 document.addEventListener('ui:theme:change', e => {
-  console.log(e.detail); // { name, light }
+  const { name, light } = e.detail;
 });
 ```
 
-### Темы
+Доступные темы: `abee-default`, `crystal-light`, `cosmic-dark`, `meadow-warm`, `steel-sharp`.  
+Каждая: dark (умолчание) + light вариант.
 
-| Класс на html | Характер |
-|---|---|
-| `theme-abee-default` + `.dark/.light` | Фирменная, янтарь |
-| `theme-crystal-light` + `.dark/.light` | Чистая, индиго |
-| `theme-cosmic-dark` + `.dark/.light` | Космос, фиолет |
-| `theme-meadow-warm` + `.dark/.light` | Природа, зелёный |
-| `theme-steel-sharp` + `.dark/.light` | Технология, циан |
-
-### Переопределение палитры игрой
-
+Переопределение палитры игрой:
 ```html
 <style>
-  /* В index.html игры — переопределить любой токен: */
-  :root, [class*="theme-"] {
-    --ui-primary:       #e23d7f;
-    --ui-primary-hover: #f04d8d;
-    --ui-primary-text:  #ffffff;
-  }
+  [class*="theme-"] { --ui-primary: #e23d7f; }
 </style>
 ```
 
 ---
 
-## Элементы
+## Компоненты
 
-_Идёт разработка (Фаза 2). Каждый элемент появится здесь по завершении своего тика._
-
-### Формат записи (для справки)
-
-```js
-// Button — кнопка
-// Параметры:
-//   label    {string}    — переведённая строка (через L10n.t('ключ'))
-//   variant  {string}    — 'primary'|'secondary'|'danger'|'icon'|'price'|'ad'
-//   disabled {boolean}   — по умолчанию false
-//   loading  {boolean}   — показывает спиннер, по умолчанию false
-//   onClick  {function}  — коллбэк нажатия
-//   price    {string}    — только для variant='price'
-//   icon     {string}    — SVG-строка (для icon и ad)
-// Возвращает: HTMLButtonElement
-//
-// Пример:
-const btn = Button({ label: L10n.t('ui.start'), variant: 'primary', onClick: startGame });
-document.querySelector('#menu').appendChild(btn);
-```
+_Разрабатываются (Фаза 2–5). Каждый появится здесь по завершении тика._
 
 ---
 
 ## Версия
 
-`0.0.2` — система тем, 2026-08-03
+`0.0.3` — базовые стили, 2026-08-03

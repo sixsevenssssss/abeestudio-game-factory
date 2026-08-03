@@ -3,89 +3,91 @@
 Библиотека UI-элементов для браузерных игр abeeStudio.  
 Чистые ES-модули, ноль внешних зависимостей в рантайме.
 
-## Подключение
+## Подключение в index.html игры
 
-```js
-// Весь пакет:
-import { UI } from '../ui/index.js';
+```html
+<!-- 1. Базовые стили (обязательно первыми) -->
+<link rel="stylesheet" href="ui/src/base/base.css">
 
-// Или отдельные части напрямую (рекомендуется для контроля веса):
-import { switchTheme } from '../ui/src/themes/index.js';
-import { Button }      from '../ui/src/components/Button.js'; // появится позже
+<!-- 2. Тема (выбрать одну или несколько) -->
+<link rel="stylesheet" href="ui/src/themes/abee-default.css">
+
+<!-- 3. JS -->
+<script type="module" src="src/game/main.js"></script>
 ```
 
 ---
 
-## Система тем
+## Базовые стили (src/base/base.css)
 
-Подключи CSS нужных тем в `index.html` игры:
+Подключается один раз. Реализует обязательные требования Яндекс Игр:
+
+| Требование | Реализация |
+|---|---|
+| Нет контекстного меню (п. 1.6) | `-webkit-touch-callout: none` |
+| Нет выделения текста (п. 1.6) | `user-select: none` (разрешено в `input`/`textarea`) |
+| Нет скролла страницы (п. 1.6) | `overflow: hidden`, `overscroll-behavior: none` |
+| Нет pinch-zoom страницы | `touch-action: none` на `<html>` |
+| Без задержки 300ms | `touch-action: manipulation` на кнопках и ссылках |
+| Зоны нажатия ≥ 44px | `min-height/width: 44px` на `button`, `a` |
+| Без синей вспышки Android | `-webkit-tap-highlight-color: transparent` |
+| prefers-reduced-motion | Медиа-запрос + класс `.prefers-reduced-motion` на `<html>` |
+
+### Утилиты
+
 ```html
-<link rel="stylesheet" href="ui/src/themes/abee-default.css">
-<!-- или любую другую / несколько -->
+<!-- Безопасные зоны (iPhone notch) -->
+<div class="ui-safe-bottom">...</div>
+<div class="ui-safe-all">...</div>
+
+<!-- Внутренний скролл (не страница!) -->
+<div class="ui-scroll">длинный список</div>
+<div class="ui-scroll-x">горизонтальная лента</div>
+
+<!-- Утилиты отображения -->
+<div class="ui-hidden">скрыт</div>
+<div class="ui-invisible">невидим (место занимает)</div>
+<span class="ui-sr-only">только для screen reader</span>
+
+<!-- Интерактивный canvas/svg (pointer-events включены) -->
+<canvas data-interactive></canvas>
 ```
 
-### switchTheme(name, light?)
+---
+
+## Система тем (src/themes/)
+
+```html
+<link rel="stylesheet" href="ui/src/themes/abee-default.css">
+```
 
 ```js
 import { switchTheme, getCurrentTheme, AVAILABLE_THEMES } from '../ui/src/themes/index.js';
 
-switchTheme('abee-default');        // тёмный вариант (умолчание)
+switchTheme('abee-default');        // тёмный вариант
 switchTheme('abee-default', true);  // светлый вариант
-switchTheme('cosmic-dark');
-switchTheme('crystal-light', true); // светлый вариант crystal-light
-
-getCurrentTheme(); // → { name: 'cosmic-dark', light: false }
-
-console.log(AVAILABLE_THEMES);
-// ['abee-default', 'crystal-light', 'cosmic-dark', 'meadow-warm', 'steel-sharp']
+getCurrentTheme(); // → { name: 'abee-default', light: false }
 ```
 
-Смена темы мгновенна — меняет классы на `<html>` без перезагрузки.  
-Событие `ui:theme:change` на `document`: `{ detail: { name, light } }`.
-
-### Доступные темы
-
-| Имя | Характер | Акцент (dark/light) |
+| Тема | Характер | Акцент |
 |---|---|---|
-| `abee-default`  | Фирменная тёмная, пружинная | #f0a500 / #d08800 |
-| `crystal-light` | Чистая светлая, плавная    | #5c6bc0 / #7986cb |
-| `cosmic-dark`   | Космическая, с глоу        | #7c4dff / #651fff |
-| `meadow-warm`   | Природная, органичная      | #56a358 / #388e3c |
-| `steel-sharp`   | Технологичная, острая      | #00bcd4 / #0097a7 |
+| `abee-default` | Фирменная, янтарь, glassmorphism | #f0a500 |
+| `crystal-light` | Чистая, индиго, тени | #5c6bc0 |
+| `cosmic-dark` | Космос, фиолет, глоу | #7c4dff |
+| `meadow-warm` | Природа, зелёный, мягкий | #56a358 |
+| `steel-sharp` | Технология, циан, острые углы | #00bcd4 |
 
-### CSS custom properties (полный список)
-
-Каждая тема задаёт ~45 переменных. Игра переопределяет нужные через `<style>`:
-
-```css
-/* Переопределение в index.html игры: */
-:root, [class*="theme-"] {
-  --ui-primary: #e23d7f;  /* свой акцент поверх любой темы */
-}
-```
-
-Основные группы:
-- Фон: `--ui-bg`, `--ui-bg-2`
-- Поверхности: `--ui-surface`, `--ui-surface-2`, `--ui-surface-3`
-- Рамки: `--ui-border`, `--ui-border-2`
-- Текст: `--ui-text`, `--ui-text-2`, `--ui-text-3`, `--ui-text-inv`
-- Акцент: `--ui-primary`, `--ui-primary-hover`, `--ui-primary-active`, `--ui-primary-surface`, `--ui-primary-text`
-- Вторичный: `--ui-secondary`, `--ui-secondary-hover`, `--ui-secondary-active`, `--ui-secondary-text`
-- Состояния: `--ui-danger/*`, `--ui-success/*`, `--ui-warn/*`, `--ui-info/*`
-- Оверлей: `--ui-overlay`
-- Радиусы: `--ui-r-xs/sm/md/lg/xl/pill`
-- Тени: `--ui-shadow-sm/md/lg`, `--ui-shadow-glow`
-- Шрифт: `--ui-font`, `--ui-fs-xs/sm/md/lg/xl`, `--ui-fw-n/m/b`, `--ui-lh`
-- Анимации: `--ui-dur`, `--ui-dur-s`, `--ui-ease`, `--ui-spring`, `--ui-snap`
+CSS custom properties: ~45 переменных (`--ui-bg`, `--ui-primary`, `--ui-r-md`, `--ui-shadow-glow`, `--ui-spring`, …).  
+Переопределение в игре: `[class*="theme-"] { --ui-primary: #e23d7f; }`
 
 ---
 
-## Готовые элементы
+## Готовые компоненты
 
-_Идёт разработка. Элементы появятся здесь по завершении тиков Фазы 2–5._
+_Идёт разработка (Фаза 2–5). Каждый компонент появится здесь по завершении своего тика._
 
 ---
 
 ## Версия
 
-`0.0.2` — система тем, 2026-08-03
+`0.0.3` — базовые стили, 2026-08-03
