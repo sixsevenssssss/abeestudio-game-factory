@@ -1,10 +1,7 @@
 /* showcase.css — стили витрины @abeestudio/ui */
 
-.sc-layout {
-  display: flex; flex-direction: column; height: 100%; width: 100%; overflow: hidden;
-}
+.sc-layout { display: flex; flex-direction: column; height: 100%; width: 100%; overflow: hidden; }
 
-/* ── HEADER ─────────────────────────────────────────────────── */
 .sc-header {
   flex-shrink: 0; display: flex; flex-wrap: wrap; align-items: flex-start;
   gap: 8px 16px; padding: 10px 12px;
@@ -34,7 +31,6 @@
 .sc-btn:hover { background: var(--ui-surface-2); color: var(--ui-text); border-color: var(--ui-border-2); }
 .sc-btn--on { background: var(--ui-primary-surface); color: var(--ui-primary); border-color: var(--ui-primary); }
 
-/* ── FRAME ───────────────────────────────────────────────────── */
 #sc-frame { flex: 1; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 #sc-frame::-webkit-scrollbar { display: none; }
 #sc-content { padding: 16px 12px; box-sizing: border-box; width: 100%; max-width: 100%; }
@@ -42,18 +38,19 @@
 #sc-frame[data-viewport="tablet"]  #sc-content { max-width: 820px;  margin: 0 auto; }
 #sc-frame[data-viewport="desktop"] #sc-content { max-width: 1200px; margin: 0 auto; }
 
-/* ── SECTIONS ────────────────────────────────────────────────── */
 .sc-section { margin-bottom: 20px; background: var(--ui-surface); border: 1px solid var(--ui-border); border-radius: var(--ui-r-md, 14px); overflow: hidden; }
 .sc-sec-head { padding: 14px 16px 10px; }
 .sc-sec-title { font-size: var(--ui-fs-lg, 20px); font-weight: var(--ui-fw-b, 700); color: var(--ui-text); line-height: 1.2; }
 .sc-sec-desc  { margin-top: 4px; font-size: var(--ui-fs-sm, 13px); color: var(--ui-text-2); }
 .sc-items { padding: 16px; border-top: 1px solid var(--ui-border); min-height: 72px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
-.sc-wip { color: var(--ui-text-3); font-size: var(--ui-fs-sm); font-style: italic; align-self: center; }
+.sc-wip   { color: var(--ui-text-3); font-size: var(--ui-fs-sm); font-style: italic; align-self: center; }
 
-/* ── DEMO LAYOUT ─────────────────────────────────────────────── */
+/* ── DEMO LAYOUT ──────────────────────────────────────────── */
 .sc-demo-group { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
 .sc-demo-variant { font-size: var(--ui-fs-xs, 11px); color: var(--ui-text-2); text-transform: uppercase; letter-spacing: .05em; font-family: 'Courier New', monospace; }
 .sc-demo-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-
-/* Вертикальная колонка для переключателей */
 .sc-demo-row--col { flex-direction: column; align-items: flex-start; gap: 4px; }
+
+/* Группа для широких компонентов (ползунков) — занимает всю доступную ширину */
+.sc-demo-group--wide { flex: 1 1 240px; min-width: 200px; max-width: 100%; }
+.sc-demo-col { display: flex; flex-direction: column; gap: 12px; width: 100%; }

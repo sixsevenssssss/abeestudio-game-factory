@@ -1,0 +1,160 @@
+/*
+ * Slider.css — горизонтальный ползунок @abeestudio/ui
+ * Загружается автоматически при импорте Slider.js.
+ */
+
+/* ── КОРНЕВОЙ КОНТЕЙНЕР ──────────────────────────────────── */
+.ui-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 120px;
+}
+
+.ui-slider--disabled {
+  opacity: 0.40;
+  pointer-events: none;
+}
+
+/* ── ЗАГОЛОВОК (метка + значение) ────────────────────────── */
+.ui-slider__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ui-slider__label {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  font-weight: var(--ui-fw-n,  400);
+  color:       var(--ui-text,  #eeeef2);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.ui-slider__value {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-sm, 13px);
+  font-weight: var(--ui-fw-m,  500);
+  color:       var(--ui-primary, #f0a500);
+  min-width:   2.5ch;
+  text-align:  right;
+  pointer-events: none;
+}
+
+/* ── ОБЁРТКА ТРЕКА ───────────────────────────────────────── */
+.ui-slider__wrap {
+  position: relative;
+  /* Зона нажатия ≥ 44px (Яндекс Игры п. 1.6) */
+  height:   44px;
+  display:  flex;
+  align-items: center;
+}
+
+/* ── ТРЕК (визуальный) ───────────────────────────────────── */
+.ui-slider__track {
+  position:      absolute;
+  left:  10px;    /* отступ под радиус thumb */
+  right: 10px;
+  height:        6px;
+  border-radius: var(--ui-r-pill, 9999px);
+  background:    var(--ui-secondary, rgba(255 255 255 / 0.10));
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── ЗАЛИВКА (активная часть) ────────────────────────────── */
+.ui-slider__fill {
+  height:        100%;
+  background:    var(--ui-primary, #f0a500);
+  border-radius: inherit;
+  pointer-events: none;
+  /* Мгновенное обновление во время перетаскивания */
+  transition: width 0ms;
+}
+
+/* ── НАТИВНЫЙ INPUT ──────────────────────────────────────── */
+.ui-slider__input {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 44px;        /* tap target */
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Focus ring */
+.ui-slider__input:focus-visible {
+  outline: 2px solid var(--ui-primary, #f0a500);
+  outline-offset: 6px;
+  border-radius: var(--ui-r-sm, 8px);
+}
+
+/* ── WEBKIT THUMB ────────────────────────────────────────── */
+.ui-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width:  22px;
+  height: 22px;
+  border-radius: 50%;
+  background:  var(--ui-primary, #f0a500);
+  border: 2px solid var(--ui-bg, #1a1a2e);
+  box-shadow:  var(--ui-shadow-sm, 0 2px 8px rgba(0 0 0 / 0.35));
+  cursor: grab;
+  transition:
+    transform   var(--ui-dur, 200ms) var(--ui-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    box-shadow  var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+.ui-slider__input:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  transform: scale(1.20);
+  box-shadow: var(--ui-shadow-glow, 0 0 16px rgba(240 165 0 / 0.50));
+}
+
+/* webkit track (скрытый — мы рисуем свой) */
+.ui-slider__input::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 6px;
+}
+
+/* ── FIREFOX THUMB ───────────────────────────────────────── */
+.ui-slider__input::-moz-range-thumb {
+  width:  22px;
+  height: 22px;
+  border-radius: 50%;
+  background:  var(--ui-primary, #f0a500);
+  border: 2px solid var(--ui-bg, #1a1a2e);
+  box-shadow: var(--ui-shadow-sm, 0 2px 8px rgba(0 0 0 / 0.35));
+  cursor: grab;
+  transition: transform var(--ui-dur, 200ms) var(--ui-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+.ui-slider__input:active::-moz-range-thumb {
+  cursor: grabbing;
+  transform: scale(1.20);
+}
+
+/* Firefox track (скрытый — мы рисуем свой) */
+.ui-slider__input::-moz-range-track {
+  background: transparent;
+  height: 6px;
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ui-slider__input::-webkit-slider-thumb,
+  .ui-slider__input::-moz-range-thumb {
+    transition-duration: 1ms !important;
+  }
+}
+.prefers-reduced-motion .ui-slider__input::-webkit-slider-thumb,
+.prefers-reduced-motion .ui-slider__input::-moz-range-thumb {
+  transition-duration: 1ms !important;
+}

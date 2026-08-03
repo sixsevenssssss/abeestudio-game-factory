@@ -1,7 +1,7 @@
 // @abeestudio/ui — точка входа
 export { Button, updateButton }  from './components/Button.js';
 export { Toggle, updateToggle }  from './components/Toggle.js';
-// export { Slider }   from './components/Slider.js';   // тик 8
+export { Slider, updateSlider }  from './components/Slider.js';
 // export { Tabs }     from './components/Tabs.js';     // тик 9
 // export { Input }    from './components/Input.js';    // тик 10
 // export { Checkbox } from './components/Checkbox.js'; // тик 11

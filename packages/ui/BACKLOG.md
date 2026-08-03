@@ -7,17 +7,17 @@
 
 - [x] Первый тик: структура пакета, PLAN.md, BACKLOG.md, STATE.md, LOG.md, API.md, скелет src/index.js + package.json, tools/check-showcase.py
 - [x] Система тем: src/themes/index.js + 5 CSS-файлов тем × light/dark, switchTheme(), getCurrentTheme()
-- [x] Базовые стили: src/base/base.css — запрет контекстного меню / выделения текста / скролла страницы, touch-action: manipulation, safe-area-inset, prefers-reduced-motion
-- [x] Скелет витрины: showcase/index.html + showcase.js + showcase.css — переключатели темы/lang/viewport, mock L10n, 9 пустых секций под все группы элементов
+- [x] Базовые стили: src/base/base.css
+- [x] Скелет витрины: showcase/index.html + showcase.js + showcase.css
 
 ---
 
 ## Фаза 2 — Базовые элементы
 
-- [x] Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина (все состояния: default, hover, active, disabled, loading)
+- [x] Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина
 - [x] Кнопки: price (кнопка с ценой) и ad-reward (с иконкой рекламы) + витрина
 - [x] Переключатель: Toggle.js (on/off) + витрина
-- [ ] Ползунок: Slider.js (горизонтальный, с метками) + витрина
+- [x] Ползунок: Slider.js (горизонтальный, с метками) + витрина
 - [ ] Вкладки: Tabs.js (горизонтальные, с нижней линией) + витрина
 - [ ] Поле ввода: Input.js (text, number, с иконкой, с ошибкой) + витрина
 - [ ] Чекбокс: Checkbox.js + витрина
@@ -61,20 +61,20 @@
 
 ## Фаза 6 — Эффекты и анимации
 
-- [ ] Переходы окон: transitions.js — fade (мягкий), spring (пружинный), snap (резкий) — функции show/hide + витрина
-- [ ] Эффекты элементов: effects.js — pulse() (пульсация CTA), glow() (подсветка) + витрина
-- [ ] Экранные эффекты: screenFX.js — shake() (тряска), flash() (вспышка) + витрина
-- [ ] Всплывающие числа: FloatingNumber.js — +100, -20 с анимацией вверх + витрина
-- [ ] Летящие монеты: FlyingCoins.js — несколько монет из точки A к счётчику B + витрина
-- [ ] Конфетти и салют: Confetti.js — canvas-анимация для крупных событий + витрина
-- [ ] Частицы: Particles.js — кастомизируемая система частиц (canvas) + витрина
-- [ ] Скелетоны: Skeleton.js — заглушки на время загрузки, shimmer-эффект + витрина
-- [ ] Переходы экранов: screenTransitions.js — fadeBlack, curtain, circleReveal + витрина
+- [ ] Переходы окон: transitions.js — fade (мягкий), spring (пружинный), snap (резкий) + витрина
+- [ ] Эффекты элементов: effects.js — pulse(), glow() + витрина
+- [ ] Экранные эффекты: screenFX.js — shake(), flash() + витрина
+- [ ] Всплывающие числа: FloatingNumber.js + витрина
+- [ ] Летящие монеты: FlyingCoins.js + витрина
+- [ ] Конфетти и салют: Confetti.js + витрина
+- [ ] Частицы: Particles.js + витрина
+- [ ] Скелетоны: Skeleton.js + витрина
+- [ ] Переходы экранов: screenTransitions.js + витрина
 
 ---
 
 ## Фаза 7 — Финальная полировка
 
 - [ ] Логотип-заставка: BrandSplash.js — SVG abeeStudio, ≤ 1.5 с, пропуск по тапу
-- [ ] Глобальный переключатель анимаций: reduceMotion() — уважает prefers-reduced-motion + ручной тумблер
-- [ ] Финальная полная проверка: все элементы × все темы × оба языка × все viewport через check-showcase.py
+- [ ] Глобальный переключатель анимаций: reduceMotion() + ручной тумблер
+- [ ] Финальная полная проверка: все элементы × все темы × оба языка × все viewport

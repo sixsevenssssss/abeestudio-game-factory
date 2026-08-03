@@ -2,16 +2,16 @@
  * showcase.js — логика витрины @abeestudio/ui
  */
 
-import { Button }              from '../src/components/Button.js';
+import { Button }               from '../src/components/Button.js';
 import { Toggle, updateToggle } from '../src/components/Toggle.js';
+import { Slider }               from '../src/components/Slider.js';
 
-// ── Mock L10n ─────────────────────────────────────────────────
+// ── Mock L10n ──────────────────────────────────────────────────
 const I18N = {
   ru: {
-    'ctrl.theme':    'Тема',    'ctrl.variant':  'Вариант',
-    'ctrl.dark':     'Тёмная',  'ctrl.light':    'Светлая',
+    'ctrl.theme': 'Тема', 'ctrl.variant': 'Вариант',
+    'ctrl.dark':  'Тёмная', 'ctrl.light':  'Светлая',
     'ctrl.viewport': 'Экран',
-
     'sec.buttons':            'Кнопки',
     'sec.buttons.desc':       'primary, secondary, danger, icon, price, ad-reward',
     'sec.forms':              'Формы',
@@ -31,24 +31,18 @@ const I18N = {
     'sec.effects':            'Эффекты и анимации',
     'sec.effects.desc':       'переходы, тряска, цифры урона, монеты, конфетти, частицы, скелетоны',
     'wip': '🚧 В разработке',
-
-    // Кнопки
-    'btn.start':     'Начать игру',  'btn.settings': 'Настройки',
-    'btn.delete':    'Удалить',       'btn.buy':      'Купить скин',
-    'btn.watch_ad':  'Получить награду',
-    'btn.price_100': '100 🪙',
-
-    // Переключатели
-    'tog.sound':   'Звуковые эффекты',
-    'tog.music':   'Музыка',
-    'tog.vibro':   'Вибрация',
-    'tog.notify':  'Уведомления',
+    'btn.start': 'Начать игру', 'btn.settings': 'Настройки',
+    'btn.delete': 'Удалить',    'btn.buy': 'Купить скин',
+    'btn.watch_ad': 'Получить награду', 'btn.price_100': '100 🪙',
+    'tog.sound': 'Звуковые эффекты', 'tog.music': 'Музыка',
+    'tog.vibro': 'Вибрация',         'tog.notify': 'Уведомления',
+    'sl.volume': 'Громкость',        'sl.music': 'Громкость музыки',
+    'sl.speed':  'Скорость',
   },
   en: {
-    'ctrl.theme':    'Theme',   'ctrl.variant':  'Variant',
-    'ctrl.dark':     'Dark',    'ctrl.light':    'Light',
+    'ctrl.theme': 'Theme', 'ctrl.variant': 'Variant',
+    'ctrl.dark':  'Dark',  'ctrl.light':   'Light',
     'ctrl.viewport': 'Viewport',
-
     'sec.buttons':            'Buttons',
     'sec.buttons.desc':       'primary, secondary, danger, icon, price, ad-reward',
     'sec.forms':              'Form Controls',
@@ -68,23 +62,20 @@ const I18N = {
     'sec.effects':            'Effects & Animations',
     'sec.effects.desc':       'window transitions, screen shake, floating numbers, flying coins, confetti, particles, skeleton loaders',
     'wip': '🚧 Work in progress',
-
-    'btn.start':     'Start Game',   'btn.settings': 'Settings',
-    'btn.delete':    'Delete',        'btn.buy':      'Buy Skin',
-    'btn.watch_ad':  'Get Reward',
-    'btn.price_100': '100 🪙',
-
-    'tog.sound':   'Sound Effects',
-    'tog.music':   'Background Music',
-    'tog.vibro':   'Vibration',
-    'tog.notify':  'Notifications',
+    'btn.start': 'Start Game', 'btn.settings': 'Settings',
+    'btn.delete': 'Delete',    'btn.buy': 'Buy Skin',
+    'btn.watch_ad': 'Get Reward', 'btn.price_100': '100 🪙',
+    'tog.sound': 'Sound Effects',    'tog.music': 'Background Music',
+    'tog.vibro': 'Vibration',        'tog.notify': 'Notifications',
+    'sl.volume': 'Volume',           'sl.music': 'Music Volume',
+    'sl.speed':  'Speed',
   },
 };
 
 let currentTheme = 'theme-abee-default', currentVariant = 'dark',
     currentLang  = 'ru', currentViewport = 'desktop';
 
-function t(key) { return (I18N[currentLang] || I18N.ru)[key] ?? key; }
+function t(k) { return (I18N[currentLang] || I18N.ru)[k] ?? k; }
 
 function applyLang(lang) {
   currentLang = lang;
@@ -128,18 +119,14 @@ document.addEventListener('click', e => {
   if ('viewport' in b.dataset) applyViewport(b.dataset.viewport);
 });
 
-// ── ИКОНКИ ───────────────────────────────────────────────────
-const ICON_STAR = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-</svg>`;
-const ICON_COIN = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/>
-  <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">$</text>
-</svg>`;
+// ── ИКОНКИ ────────────────────────────────────────────────────
+const ICON_STAR = `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+const ICON_COIN = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">$</text></svg>`;
 
-// ── Реестр демо-элементов ─────────────────────────────────────
-const _demoBtns    = [];  // { el, labelKey, priceKey? }
-const _demoToggles = [];  // { el, labelKey }
+// ── Реестры для обновления при смене языка ─────────────────────
+const _demoBtns    = [];
+const _demoToggles = [];
+const _demoSliders = [];
 
 function _refreshDemoLabels() {
   _demoBtns.forEach(({ el, labelKey, priceKey }) => {
@@ -149,16 +136,17 @@ function _refreshDemoLabels() {
     const pr = el.querySelector('.ui-btn__price');
     if (pr && priceKey) pr.textContent = t(priceKey);
   });
-  _demoToggles.forEach(({ el, labelKey }) =>
-    updateToggle(el, { label: t(labelKey) }));
+  _demoToggles.forEach(({ el, labelKey }) => updateToggle(el, { label: t(labelKey) }));
+  _demoSliders.forEach(({ el, labelKey }) => {
+    const lbl = el.querySelector('.ui-slider__label');
+    if (lbl) lbl.textContent = t(labelKey);
+  });
 }
 
-// ── Фабрики ──────────────────────────────────────────────────
+// ── Фабрики ────────────────────────────────────────────────────
 function _btnGroup(variant, labelKey, opts = {}) {
-  const g = document.createElement('div');
-  g.className = 'sc-demo-group';
-  const h = document.createElement('div');
-  h.className = 'sc-demo-variant'; h.textContent = variant; g.appendChild(h);
+  const g = document.createElement('div'); g.className = 'sc-demo-group';
+  const h = document.createElement('div'); h.className = 'sc-demo-variant'; h.textContent = variant; g.appendChild(h);
   const row = document.createElement('div'); row.className = 'sc-demo-row';
   const shared = { variant, label: t(labelKey), ...opts };
   const b0 = Button({ ...shared });
@@ -173,7 +161,7 @@ function _btnGroup(variant, labelKey, opts = {}) {
   return g;
 }
 
-// ── Секции ────────────────────────────────────────────────────
+// ── Секции ─────────────────────────────────────────────────────
 function initButtons() {
   const c = document.querySelector('#sec-buttons .sc-items');
   if (!c) return;
@@ -182,8 +170,8 @@ function initButtons() {
     _btnGroup('primary',   'btn.start'),
     _btnGroup('secondary', 'btn.settings'),
     _btnGroup('danger',    'btn.delete'),
-    _btnGroup('icon',      'btn.start',    { icon: ICON_STAR }),
-    _btnGroup('price',     'btn.buy',      { icon: ICON_COIN, price: t('btn.price_100'), priceKey: 'btn.price_100' }),
+    _btnGroup('icon',      'btn.start',  { icon: ICON_STAR }),
+    _btnGroup('price',     'btn.buy',    { icon: ICON_COIN, price: t('btn.price_100'), priceKey: 'btn.price_100' }),
     _btnGroup('ad',        'btn.watch_ad'),
   );
 }
@@ -191,47 +179,54 @@ function initButtons() {
 function initForms() {
   const c = document.querySelector('#sec-forms .sc-items');
   if (!c) return;
-  c.innerHTML = ''; _demoToggles.length = 0;
+  c.innerHTML = '';
+  _demoToggles.length = 0;
+  _demoSliders.length = 0;
 
-  // Переключатели — 4 варианта
-  const toggleDefs = [
-    { labelKey: 'tog.sound',  checked: true  },
-    { labelKey: 'tog.music',  checked: false },
-    { labelKey: 'tog.vibro',  checked: true  },
-    { labelKey: 'tog.notify', checked: false },
-  ];
+  // ── Переключатели ──────────────────────────────────────
+  const togGroup = document.createElement('div'); togGroup.className = 'sc-demo-group';
+  const togHead  = document.createElement('div'); togHead.className = 'sc-demo-variant'; togHead.textContent = 'toggle'; togGroup.appendChild(togHead);
+  const togRow   = document.createElement('div'); togRow.className = 'sc-demo-row sc-demo-row--col';
 
-  // Группа: включённые / выключенные
-  const onGroup = document.createElement('div');
-  onGroup.className = 'sc-demo-group';
-  const onHead = document.createElement('div');
-  onHead.className = 'sc-demo-variant'; onHead.textContent = 'toggle'; onGroup.appendChild(onHead);
-  const onRow = document.createElement('div'); onRow.className = 'sc-demo-row sc-demo-row--col';
-
-  toggleDefs.forEach(({ labelKey, checked }) => {
-    const tog = Toggle({ label: t(labelKey), checked });
-    onRow.appendChild(tog);
-    _demoToggles.push({ el: tog, labelKey });
+  [{ lk: 'tog.sound', on: true }, { lk: 'tog.music', on: false },
+   { lk: 'tog.vibro', on: true }, { lk: 'tog.notify', on: false }].forEach(({ lk, on }) => {
+    const tog = Toggle({ label: t(lk), checked: on });
+    togRow.appendChild(tog);
+    _demoToggles.push({ el: tog, labelKey: lk });
   });
 
-  // Disabled toggle
-  const disabledGroup = document.createElement('div');
-  disabledGroup.className = 'sc-demo-group';
-  const disHead = document.createElement('div');
-  disHead.className = 'sc-demo-variant'; disHead.textContent = 'toggle (disabled)'; disabledGroup.appendChild(disHead);
-  const disRow = document.createElement('div'); disRow.className = 'sc-demo-row sc-demo-row--col';
+  const togDisGroup = document.createElement('div'); togDisGroup.className = 'sc-demo-group';
+  const togDisHead  = document.createElement('div'); togDisHead.className = 'sc-demo-variant'; togDisHead.textContent = 'toggle (disabled)'; togDisGroup.appendChild(togDisHead);
+  const togDisRow   = document.createElement('div'); togDisRow.className = 'sc-demo-row sc-demo-row--col';
+  const togD0 = Toggle({ label: t('tog.sound'), checked: true,  disabled: true });
+  const togD1 = Toggle({ label: t('tog.music'), checked: false, disabled: true });
+  togDisRow.append(togD0, togD1);
+  _demoToggles.push({ el: togD0, labelKey: 'tog.sound' }, { el: togD1, labelKey: 'tog.music' });
 
-  const togDis0 = Toggle({ label: t('tog.sound'), checked: true,  disabled: true });
-  const togDis1 = Toggle({ label: t('tog.music'), checked: false, disabled: true });
-  disRow.append(togDis0, togDis1);
-  _demoToggles.push({ el: togDis0, labelKey: 'tog.sound' }, { el: togDis1, labelKey: 'tog.music' });
+  togGroup.appendChild(togRow);
+  togDisGroup.appendChild(togDisRow);
 
-  onGroup.appendChild(onRow);
-  disabledGroup.appendChild(disRow);
-  c.append(onGroup, disabledGroup);
+  // ── Ползунки ────────────────────────────────────────────
+  const slGroup = document.createElement('div'); slGroup.className = 'sc-demo-group sc-demo-group--wide';
+  const slHead  = document.createElement('div'); slHead.className = 'sc-demo-variant'; slHead.textContent = 'slider'; slGroup.appendChild(slHead);
+  const slCol   = document.createElement('div'); slCol.className = 'sc-demo-col';
+
+  const slDefs = [
+    { lk: 'sl.volume', value: 70 },
+    { lk: 'sl.music',  value: 30 },
+    { lk: 'sl.speed',  value: 50, disabled: true },
+  ];
+  slDefs.forEach(({ lk, value, disabled }) => {
+    const sl = Slider({ label: t(lk), value, disabled: !!disabled });
+    slCol.appendChild(sl);
+    _demoSliders.push({ el: sl, labelKey: lk });
+  });
+
+  slGroup.appendChild(slCol);
+  c.append(togGroup, togDisGroup, slGroup);
 }
 
-// ── Инициализация ────────────────────────────────────────────
+// ── Init ───────────────────────────────────────────────────────
 applyLang('ru');
 applyViewport('desktop');
 initButtons();
