@@ -1,19 +1,16 @@
 # STATE — abeeStudio · Фундамент
 
-## Статус: тик 7 завершён
+## Статус: тик 8 завершён
 
 ### Готово
-- [x] Тик 0-6 — EventBus, GameLoop, SceneManager, InputManager, MockPlatform, YandexPlatform
-- [x] Тик 7 — `src/save.js` — SaveSystem (VERSION, цепочка миграций, get/set с путём, flush, debounce 300мс, резервная копия, защита от битого JSON), 28 тестов
-
-### В работе
-- (ничего)
+- [x] Тик 0-7 — EventBus, GameLoop, SceneManager, InputManager, MockPlatform, YandexPlatform, SaveSystem
+- [x] Тик 8 — `src/ads.js` — AdsSystem (rewarded→bool, interstitial с интервалом, пауза+duck, ошибка→false, isShowing), 25 тестов
 
 ### Всего тестов
-- 182 (17+20+28+22+44+23+28)
+- 207 (17+20+28+22+44+23+28+25)
 
 ### Версия шаблона
 - 0.0.0 (не выпущена)
 
 ### Следующий пункт бэклога
-- Тик 8: `src/ads.js` — AdsSystem (rewarded/interstitial, интервал, пауза+звук)
+- Тик 9: `src/audio.js` — AudioSystem (шины music/sfx/ui, crossfade, duck, пул, Web Audio API)

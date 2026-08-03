@@ -140,3 +140,18 @@ get(path) / set(path, val) / flush() / snapshot() / reset() / size().
 Аварийный сейв по beforeunload и EventBus:app:hidden/platform:hidden.
 MockStorage для тестов без localStorage.
 Тесты: 28 кейсов, зелёные. Регрессия 154 → зелёные. Итого 182.
+
+---
+
+## 2026-08-03 — Тик 8: AdsSystem (src/ads.js)
+
+**Что сделано:** написан `src/ads.js` — система рекламы.
+rewarded(id)→Promise<bool>: pause+duck → showRewardedVideo → resume+unduck; false при ошибке/отказе.
+interstitial(reason)→Promise<void>: интервал 60с, пропуск если занято.
+isShowing, resetInterstitialTimer(), setInterstitialInterval().
+Тесты: 25 кейсов. Регрессия 182 → зелёные. Итого 207.
+
+**Решения:**
+- _beforeShow/_afterShow — try/catch вокруг loop/audio (они nullable для тестов).
+- conc. защита: if (_showing) → rewarded немедленно false, interstitial Promise.resolve().
+- interstitial НЕ обновляет таймер при skipped — только при реальном показе (onClose).
