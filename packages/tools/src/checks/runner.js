@@ -81,7 +81,11 @@ export function formatReport(results) {
                : r.status === STATUS.FAIL ? '❌'
                :                            '⬜';
     lines.push(`${icon}  ${r.id.padEnd(5)}  ${r.title}`);
-    if (r.status !== STATUS.OK) {
+
+    // Сообщение печатается у всего, что не ok, — и у измерительных проверок,
+    // которые пометили себя `show: true`: у них измеренное число и есть смысл
+    // проверки, скрывать его за зелёной галочкой бессмысленно.
+    if (r.status !== STATUS.OK || r.show === true) {
       lines.push(`         ${r.message}`);
       if (r.fix) lines.push(`         → Где исправить: ${r.fix}`);
     }
