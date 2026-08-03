@@ -184,3 +184,16 @@ setLang(lang): горячая смена + l10n:changed EventBus; тот же я
 _normalizeLang: 'ru-RU' → 'ru', 'en_US' → 'en'.
 _checkParity: Warning для каждого ключа, отсутствующего в одном из словарей.
 Тесты: 39 кейсов. Регрессия 241 → зелёные. Итого 280.
+
+---
+
+## 2026-08-03 — Тик 11: AchievementsSystem (src/achievements.js)
+
+**Что сделано:** написан `src/achievements.js`.
+unlock(id): идемпотентен, событие:once, нет crash на неизвестный id.
+progress(id, val): только рост, auto-unlock при >= target.
+addProgress(id, delta): дельта поверх progress.
+Персистенция через Save.set('achievements.{id}', state) → reload.
+Очередь уведомлений: showToast вызывается для каждого по очереди (TOAST_MS между ними).
+getAll() возвращает объединение def + state.
+Тесты: 28 кейсов. Регрессия 280 → зелёные. Итого 308.

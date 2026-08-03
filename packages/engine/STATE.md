@@ -1,16 +1,16 @@
 # STATE — abeeStudio · Фундамент
 
-## Статус: тик 10 завершён
+## Статус: тик 11 завершён
 
 ### Готово
-- [x] Тик 0-9 — EventBus, GameLoop, SceneManager, InputManager, Platform (mock+yandex), SaveSystem, AdsSystem, AudioSystem
-- [x] Тик 10 — `src/l10n.js` — L10nSystem (init, t(key,vars), plural RU (все 11 кейсов), setLang, нормализация кода, фоллбэк, паритет ключей), 39 тестов
+- [x] Тик 0-10 — EventBus, GameLoop, SceneManager, InputManager, Platform, SaveSystem, AdsSystem, AudioSystem, L10nSystem
+- [x] Тик 11 — `src/achievements.js` — AchievementsSystem (one-shot/progress, auto-unlock, addProgress, persist, очередь уведомлений), 28 тестов
 
 ### Всего тестов
-- 280 (17+20+28+22+44+23+28+25+34+39)
+- 308 (17+20+28+22+44+23+28+25+34+39+28)
 
 ### Версия шаблона
 - 0.0.0 (не выпущена)
 
 ### Следующий пункт бэклога
-- Тик 11: `src/achievements.js` — каталог, progress/unlock, всплывающее уведомление, очередь
+- Тик 12: `src/daily.js` — DailySystem (стрик, честный UTC-подсчёт, предпросмотр наград)
