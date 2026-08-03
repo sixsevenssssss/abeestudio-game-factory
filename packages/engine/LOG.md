@@ -127,3 +127,16 @@ visibilitychange → platform:hidden/visible на EventBus (п. 1.3 площад
   на EventBus. Engine.start() wire-ует обработчики. Правильное разделение слоёв.
 - leaderboard потребовал getLeaderboards() — обёрнут в lazy-init со shared _lb.
 - Fake-ysdk для тестов использует duck typing — проверяет интерфейс без реального SDK.
+
+---
+
+## 2026-08-03 — Тик 7: SaveSystem (src/save.js)
+
+**Что сделано:** написан `src/save.js` — система сохранений с полной защитой данных.
+get(path) / set(path, val) / flush() / snapshot() / reset() / size().
+Версионирование: _version, цепочка migrate(v, fn).
+Защита: битый JSON → резервная копия → начало с нуля (не исключение).
+Резервная копия = предыдущий успешный flush (не текущий).
+Аварийный сейв по beforeunload и EventBus:app:hidden/platform:hidden.
+MockStorage для тестов без localStorage.
+Тесты: 28 кейсов, зелёные. Регрессия 154 → зелёные. Итого 182.
