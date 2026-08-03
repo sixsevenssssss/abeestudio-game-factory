@@ -1,0 +1,15 @@
+{
+  "name": "@abeestudio/ui",
+  "version": "0.0.1",
+  "description": "Библиотека UI-элементов для браузерных игр abeeStudio (Яндекс Игры)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./themes": "./src/themes/index.js"
+  },
+  "files": ["src", "showcase"],
+  "keywords": ["abeestudio", "yandex-games", "ui", "game-ui"],
+  "license": "UNLICENSED",
+  "private": true
+}
