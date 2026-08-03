@@ -1,0 +1,115 @@
+/*
+ * Tabs.css — горизонтальные вкладки @abeestudio/ui
+ * Загружается автоматически при импорте Tabs.js.
+ */
+
+/* ── КОНТЕЙНЕР ───────────────────────────────────────────── */
+.ui-tabs {
+  position: relative;
+  display:  flex;
+  align-items: flex-end;
+
+  /* Нижняя линия (фоновая) */
+  border-bottom: 1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+
+  /* Горизонтальная прокрутка для многих вкладок */
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.ui-tabs::-webkit-scrollbar { display: none; }
+
+/* Заблокированный */
+.ui-tabs--disabled {
+  opacity: 0.40;
+  pointer-events: none;
+}
+
+/* ── КНОПКА ВКЛАДКИ ──────────────────────────────────────── */
+.ui-tabs__tab {
+  /* Минимальная зона нажатия ≥ 44px */
+  min-height: 44px;
+  min-width:  44px;
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  font-weight: var(--ui-fw-n,  400);
+  color:       var(--ui-text-2);
+  white-space: nowrap;
+
+  background:   none;
+  border:       none;
+  outline:      none;
+  cursor:       pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select:  none;
+  -webkit-user-select: none;
+
+  transition:
+    color    var(--ui-dur, 200ms) var(--ui-ease, ease),
+    opacity  var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+
+.ui-tabs__tab:hover:not([disabled]) {
+  color: var(--ui-text);
+}
+
+.ui-tabs__tab--active {
+  color:       var(--ui-primary, #f0a500) !important;
+  font-weight: var(--ui-fw-m,  500);
+}
+
+.ui-tabs__tab[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Focus ring */
+.ui-tabs__tab:focus-visible {
+  outline: 2px solid var(--ui-primary, #f0a500);
+  outline-offset: -2px;
+  border-radius: var(--ui-r-sm, 6px);
+}
+
+/* ── ТЕКСТ ВКЛАДКИ ───────────────────────────────────────── */
+.ui-tabs__label {
+  pointer-events: none;
+}
+
+/* ── СКОЛЬЗЯЩИЙ ИНДИКАТОР ────────────────────────────────── */
+.ui-tabs__indicator {
+  position:      absolute;
+  bottom:        -1px;   /* перекрывает нижнюю линию контейнера */
+  left:          0;
+  height:        2px;
+  border-radius: var(--ui-r-pill, 9999px);
+  background:    var(--ui-primary, #f0a500);
+  pointer-events: none;
+
+  /* Начальное состояние (позиция устанавливается через JS) */
+  width:     0;
+  transform: translateX(0);
+
+  transition:
+    transform var(--ui-dur, 200ms) var(--ui-ease,   cubic-bezier(0.4, 0, 0.2, 1)),
+    width     var(--ui-dur, 200ms) var(--ui-spring,  cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ui-tabs__indicator { transition-duration: 1ms !important; }
+  .ui-tabs__tab       { transition-duration: 1ms !important; }
+}
+.prefers-reduced-motion .ui-tabs__indicator,
+.prefers-reduced-motion .ui-tabs__tab {
+  transition-duration: 1ms !important;
+}
