@@ -161,10 +161,28 @@ describe('formatReport', () => {
     assert.ok(report.includes('нет браузера'), 'нет причины skip');
   });
 
-  test('пустые результаты — отчёт без ошибок', () => {
+  test('пустой реестр → ВЕРДИКТ НЕ ВЫДАН, не зелёное', () => {
     const report = formatReport([]);
-    assert.ok(typeof report === 'string');
-    assert.ok(report.includes('ГОТОВО'));
+    assert.ok(report.includes('ВЕРДИКТ НЕ ВЫДАН'), `Отчёт: ${report}`);
+    assert.ok(!report.includes('✅'),
+      'пустой чек-лист не имеет права печатать зелёную галочку');
+    assert.ok(!report.includes('ГОТОВО К ОТПРАВКЕ'),
+      'ничего не проверено — это не «готово к отправке»');
+  });
+
+  test('все проверки skip → ВЕРДИКТ НЕ ВЫДАН, не зелёное', async () => {
+    const results = await runChecks('/tmp', [checkSkip]);
+    const report = formatReport(results);
+    assert.ok(report.includes('ВЕРДИКТ НЕ ВЫДАН'), `Отчёт: ${report}`);
+    assert.ok(!report.includes('ГОТОВО К ОТПРАВКЕ'),
+      'если не выполнилась ни одна проверка — вердикта нет');
+  });
+
+  test('ok + skip → ГОТОВО К ОТПРАВКЕ (есть подтверждённая проверка)', async () => {
+    const results = await runChecks('/tmp', [checkOk, checkSkip]);
+    const report = formatReport(results);
+    assert.ok(report.includes('ГОТОВО К ОТПРАВКЕ'), `Отчёт: ${report}`);
+    assert.ok(report.includes('1 пропущено'), 'счётчик пропущенных должен быть виден');
   });
 });
 
@@ -181,24 +199,30 @@ describe('exitCode', () => {
     assert.equal(exitCode(results), 1);
   });
 
-  test('только skip → 0 (skip не блокирует отправку)', async () => {
+  test('только skip → 2 (вердикт не выдан, а не «всё хорошо»)', async () => {
     const results = await runChecks('/tmp', [checkSkip]);
-    assert.equal(exitCode(results), 0,
-      'skip — это "не проверено", а не ошибка: не блокируем отправку');
+    assert.equal(exitCode(results), 2,
+      'ни одна проверка не выполнилась — возвращать 0 значит соврать вызывающему');
   });
 
-  test('skip + ok → 0', async () => {
+  test('skip + ok → 0 (есть подтверждённая проверка)', async () => {
     const results = await runChecks('/tmp', [checkOk, checkSkip]);
     assert.equal(exitCode(results), 0);
   });
 
-  test('пустые результаты → 0', () => {
-    assert.equal(exitCode([]), 0);
+  test('пустой реестр → 2', () => {
+    assert.equal(exitCode([]), 2,
+      'пустой чек-лист не имеет права возвращать успех');
   });
 
-  test('исключение в fn (→ skip) → 0', async () => {
+  test('исключение в fn (→ skip) → 2, не 0', async () => {
     const results = await runChecks('/tmp', [checkThrows]);
-    assert.equal(exitCode(results), 0,
-      'ошибка в самой проверке даёт skip, но не должна ложно блокировать отправку');
+    assert.equal(exitCode(results), 2,
+      'единственная проверка упала — вердикта нет, ноль вернуть нельзя');
+  });
+
+  test('fail важнее пустоты: fail + skip → 1', async () => {
+    const results = await runChecks('/tmp', [checkFail, checkSkip]);
+    assert.equal(exitCode(results), 1);
   });
 });

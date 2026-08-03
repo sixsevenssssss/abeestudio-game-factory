@@ -52,15 +52,27 @@ export async function runChecks(gameDir, checks, { only } = {}) {
 /**
  * Форматирует отчёт.
  * Порядок: вердикт → детали. Fail и skip — с объяснением и ссылкой.
+ *
+ * Четыре вердикта, а не два. «Ничего не проверено» — это НЕ «всё в порядке»:
+ * пустой реестр или полностью пропущенный прогон не имеет права печатать зелёное.
  */
 export function formatReport(results) {
   const fails = results.filter(r => r.status === STATUS.FAIL);
   const skips = results.filter(r => r.status === STATUS.SKIP);
   const oks   = results.filter(r => r.status === STATUS.OK);
 
-  const header = fails.length === 0
-    ? `✅  ГОТОВО К ОТПРАВКЕ  (${oks.length} ✔  ${skips.length} пропущено)`
-    : `❌  НЕ ГОТОВО  —  ${fails.length} ${ruPlural(fails.length, 'проблема', 'проблемы', 'проблем')}  (${oks.length} ✔  ${skips.length} пропущено)`;
+  let header;
+  if (results.length === 0) {
+    header = `⚠️   ВЕРДИКТ НЕ ВЫДАН  —  ни одна проверка не зарегистрирована\n`
+           + `    Чек-лист пуст: игра НЕ проверена. Это не «готово».`;
+  } else if (oks.length === 0 && fails.length === 0) {
+    header = `⚠️   ВЕРДИКТ НЕ ВЫДАН  —  ни одна проверка не выполнилась (${skips.length} пропущено)\n`
+           + `    Игра НЕ проверена. Причины пропуска — ниже.`;
+  } else if (fails.length === 0) {
+    header = `✅  ГОТОВО К ОТПРАВКЕ  (${oks.length} ✔  ${skips.length} пропущено)`;
+  } else {
+    header = `❌  НЕ ГОТОВО  —  ${fails.length} ${ruPlural(fails.length, 'проблема', 'проблемы', 'проблем')}  (${oks.length} ✔  ${skips.length} пропущено)`;
+  }
 
   const lines = [header, ''];
 
@@ -79,12 +91,23 @@ export function formatReport(results) {
 }
 
 /**
- * Возвращает код выхода: 1 если есть хотя бы один fail, иначе 0.
- * skip ≠ fail: пропущенная проверка не блокирует отправку,
- * но честно отражается в отчёте.
+ * Код выхода:
+ *   0 — есть подтверждённые ok и ни одного fail (часть проверок могла быть пропущена)
+ *   1 — есть хотя бы один fail
+ *   2 — вердикт не выдан: реестр пуст или НИ ОДНА проверка не выполнилась
+ *
+ * Код 2 принципиален. Ноль означает «проверено и можно заливать»; если
+ * проверок не было вовсе, вернуть ноль — значит соврать вызывающему (и CI,
+ * и человеку). Отказ модерации удваивает кулдаун, поэтому «не знаю» обязано
+ * отличаться от «всё хорошо».
+ *
+ * skip ≠ fail: отдельная пропущенная проверка не блокирует отправку,
+ * пока есть хотя бы одна подтверждённая ok.
  */
 export function exitCode(results) {
-  return results.some(r => r.status === STATUS.FAIL) ? 1 : 0;
+  if (results.some(r => r.status === STATUS.FAIL)) return 1;
+  if (results.filter(r => r.status === STATUS.OK).length === 0) return 2;
+  return 0;
 }
 
 // ─── Вспомогательные ─────────────────────────────────────────────────────────
