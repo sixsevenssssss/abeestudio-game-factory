@@ -14,7 +14,7 @@
 
 ## Фаза 2 — Базовые элементы
 
-- [ ] Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина (все состояния: default, hover, active, disabled, loading)
+- [x] Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина (все состояния: default, hover, active, disabled, loading)
 - [ ] Кнопки: price (кнопка с ценой) и ad-reward (с иконкой рекламы) + витрина
 - [ ] Переключатель: Toggle.js (on/off) + витрина
 - [ ] Ползунок: Slider.js (горизонтальный, с метками) + витрина

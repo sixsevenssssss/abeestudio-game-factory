@@ -1,10 +1,9 @@
 /**
  * showcase.js — логика витрины @abeestudio/ui
- * Переключатели темы / варианта / языка / viewport.
- * Mock L10n — имитирует L10n.t() для демонстрации двуязычности.
- *
- * NB: английские строки намеренно длиннее русских — тест на обрезание.
+ * Переключатели темы / варианта / языка / viewport + рендер компонентов.
  */
+
+import { Button } from '../src/components/Button.js';
 
 // ── Mock локализация ──────────────────────────────────────────
 const I18N = {
@@ -33,8 +32,17 @@ const I18N = {
     'sec.game.desc':     'карточки наград, сундук, ежедневные награды, достижения, лидерборд, магазин',
     'sec.effects':       'Эффекты и анимации',
     'sec.effects.desc':  'переходы, тряска, цифры урона, монеты, конфетти, частицы, скелетоны',
-
     'wip': '🚧 В разработке',
+
+    // Кнопки — метки состояний
+    'btn.demo.start':    'Начать игру',
+    'btn.demo.second':   'Настройки',
+    'btn.demo.delete':   'Удалить',
+    'btn.demo.disabled': 'Недоступно',
+    'btn.demo.loading':  'Загрузка',
+    'state.default':     'По умолчанию',
+    'state.disabled':    'Заблокировано',
+    'state.loading':     'Загрузка',
   },
   en: {
     'ctrl.theme':    'Theme',
@@ -61,73 +69,144 @@ const I18N = {
     'sec.game.desc':     'reward cards, chest reveal, daily rewards streak, achievement badge, leaderboard, shop, no-coins dialog',
     'sec.effects':       'Effects & Animations',
     'sec.effects.desc':  'window transitions, screen shake, floating numbers, flying coins, confetti, particles, skeleton loaders',
-
     'wip': '🚧 Work in progress',
+
+    'btn.demo.start':    'Start Game',
+    'btn.demo.second':   'Settings',
+    'btn.demo.delete':   'Delete',
+    'btn.demo.disabled': 'Unavailable',
+    'btn.demo.loading':  'Loading...',
+    'state.default':     'Default',
+    'state.disabled':    'Disabled',
+    'state.loading':     'Loading',
   },
 };
 
 // ── State ─────────────────────────────────────────────────────
-let currentTheme   = 'theme-abee-default';
-let currentVariant = 'dark';
-let currentLang    = 'ru';
+let currentTheme    = 'theme-abee-default';
+let currentVariant  = 'dark';
+let currentLang     = 'ru';
 let currentViewport = 'desktop';
 
-// ── Применить локализацию ─────────────────────────────────────
+// ── Локализация ───────────────────────────────────────────────
+function t(key) { return (I18N[currentLang] || I18N.ru)[key] ?? key; }
+
 function applyLang(lang) {
   currentLang = lang;
-  const dict = I18N[lang] || I18N.ru;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    if (key && dict[key] !== undefined) el.textContent = dict[key];
+    const val = (I18N[lang] || I18N.ru)[key];
+    if (val !== undefined) el.textContent = val;
   });
   document.querySelectorAll('[data-lang]').forEach(btn => {
     btn.classList.toggle('sc-btn--on', btn.dataset.lang === lang);
   });
   document.documentElement.lang = lang;
+  _refreshButtonLabels();
 }
 
-// ── Применить тему ────────────────────────────────────────────
+// ── Тема ──────────────────────────────────────────────────────
 function applyTheme(theme, variant) {
   currentTheme   = theme;
   currentVariant = variant;
-
-  const html = document.documentElement;
-  // Убираем все theme-* классы и варианты
-  const classes = Array.from(html.classList).filter(
+  const html  = document.documentElement;
+  const keep  = Array.from(html.classList).filter(
     c => !c.startsWith('theme-') && c !== 'dark' && c !== 'light'
   );
-  html.className = classes.join(' ');
+  html.className = keep.join(' ');
   html.classList.add(theme, variant);
-
-  document.querySelectorAll('[data-theme]').forEach(btn => {
-    btn.classList.toggle('sc-btn--on', btn.dataset.theme === theme);
-  });
-  document.querySelectorAll('[data-variant]').forEach(btn => {
-    btn.classList.toggle('sc-btn--on', btn.dataset.variant === variant);
-  });
+  document.querySelectorAll('[data-theme]').forEach(b =>
+    b.classList.toggle('sc-btn--on', b.dataset.theme === theme));
+  document.querySelectorAll('[data-variant]').forEach(b =>
+    b.classList.toggle('sc-btn--on', b.dataset.variant === variant));
 }
 
-// ── Применить viewport ────────────────────────────────────────
+// ── Viewport ──────────────────────────────────────────────────
 function applyViewport(vp) {
   currentViewport = vp;
   const frame = document.getElementById('sc-frame');
   if (frame) frame.dataset.viewport = vp;
-  document.querySelectorAll('[data-viewport]').forEach(btn => {
-    btn.classList.toggle('sc-btn--on', btn.dataset.viewport === vp);
-  });
+  document.querySelectorAll('[data-viewport]').forEach(b =>
+    b.classList.toggle('sc-btn--on', b.dataset.viewport === vp));
 }
 
-// ── Делегированный обработчик кликов ─────────────────────────
+// ── Обработчик кликов ─────────────────────────────────────────
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-theme],[data-variant],[data-lang],[data-viewport]');
   if (!btn) return;
-
   if ('theme'    in btn.dataset) applyTheme(btn.dataset.theme, currentVariant);
   if ('variant'  in btn.dataset) applyTheme(currentTheme, btn.dataset.variant);
   if ('lang'     in btn.dataset) applyLang(btn.dataset.lang);
   if ('viewport' in btn.dataset) applyViewport(btn.dataset.viewport);
 });
 
+// ── КОМПОНЕНТЫ: Кнопки ───────────────────────────────────────
+// SVG-иконка для кнопок-иконок (простая звезда)
+const ICON_STAR = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+</svg>`;
+
+// Хранилище кнопок с метками — для обновления при смене языка
+const _demoButtons = [];
+
+function initButtons() {
+  const container = document.querySelector('#sec-buttons .sc-items');
+  if (!container) return;
+  container.innerHTML = '';
+  _demoButtons.length = 0;
+
+  // Группы: [вариант, ключ метки, иконка]
+  const specs = [
+    { variant: 'primary',   labelKey: 'btn.demo.start',  icon: null },
+    { variant: 'secondary', labelKey: 'btn.demo.second', icon: null },
+    { variant: 'danger',    labelKey: 'btn.demo.delete', icon: null },
+    { variant: 'icon',      labelKey: 'btn.demo.start',  icon: ICON_STAR },
+  ];
+
+  specs.forEach(({ variant, labelKey, icon }) => {
+    const group = document.createElement('div');
+    group.className = 'sc-demo-group';
+
+    // Заголовок варианта
+    const heading = document.createElement('div');
+    heading.className = 'sc-demo-variant';
+    heading.textContent = variant;
+    group.appendChild(heading);
+
+    // Строка состояний
+    const row = document.createElement('div');
+    row.className = 'sc-demo-row';
+
+    // default
+    const btnDefault = Button({ label: t(labelKey), variant, icon });
+    row.appendChild(btnDefault);
+    _demoButtons.push({ el: btnDefault, key: labelKey });
+
+    // disabled
+    const btnDisabled = Button({ label: t(labelKey), variant, icon, disabled: true });
+    row.appendChild(btnDisabled);
+    _demoButtons.push({ el: btnDisabled, key: labelKey });
+
+    // loading
+    const btnLoading = Button({ label: t(labelKey), variant, icon, loading: true });
+    row.appendChild(btnLoading);
+    _demoButtons.push({ el: btnLoading, key: labelKey });
+
+    group.appendChild(row);
+    container.appendChild(group);
+  });
+}
+
+function _refreshButtonLabels() {
+  _demoButtons.forEach(({ el, key }) => {
+    const labelEl = el.querySelector('.ui-btn__label');
+    if (labelEl) labelEl.textContent = t(key);
+    const ariaLabel = el.getAttribute('aria-label');
+    if (ariaLabel) el.setAttribute('aria-label', t(key));
+  });
+}
+
 // ── Инициализация ────────────────────────────────────────────
 applyLang('ru');
 applyViewport('desktop');
+initButtons();
