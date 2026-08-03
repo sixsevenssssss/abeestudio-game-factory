@@ -92,3 +92,21 @@ update(dt)/render(alpha): делегируют в активную сцену.
 - tap исключён при drag (state.dragging=true в проверке тапа).
 - _simulate*() методы для тестирования без DOM — прямой вызов обработчиков с fake-событиями.
 - style.touchAction='none' и contextmenu preventDefault — требование п. 1.6 площадки.
+
+---
+
+## 2026-08-03 — Тик 5: MockPlatform (src/platform/mock.js)
+
+**Что сделано:** написан `src/platform/mock.js` — полный мок Яндекс SDK.
+Подсистемы: environment, adv (rewarded/interstitial + game_api_pause/resume),
+player (lite/full, cloudData, stats), leaderboard, payments + consumePurchase,
+loadingAPI.ready(), shortcut, feedback, features.GamesAPI.
+initPlatform() автоопределяет среду (Node.js → мок, браузер с YaGames → реальный SDK).
+Тесты: 44 кейса. Регрессия 87 → зелёные. Итого 131.
+
+**Решения:**
+- Мок отдаёт game_api_pause до показа рекламы и game_api_resume после — имитирует
+  реальное поведение SDK (требование п. 4.7 площадки).
+- overridePlayer() / overrideRewardedResult() / seedCloudData() — для тестов систем
+  которые зависят от Platform (Save, Ads, Achievements).
+- initPlatform() проверяет window.YaGames — единая точка инициализации для engine.
