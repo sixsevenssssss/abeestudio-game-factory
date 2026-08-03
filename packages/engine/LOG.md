@@ -221,3 +221,16 @@ event(name, params): буфер + journal. flush(): отправка в Platform
 Auto-events: подписка на EventBus achievements:unlocked, ads:rewarded:granted/end.
 sessionEnd и purchase вызывают flush() немедленно.
 Тесты: 31 кейс. Регрессия 337 → зелёные. Итого 368.
+
+---
+
+## 2026-08-03 — Тик 14: BrandModule (src/brand.js)
+
+**Что сделано:** написан `src/brand.js` — BrandModule.
+SVG-логотип: шестиугольник + пчела (тело, полоски, крылья, усики) + надпись «abeeStudio».
+Без внешних ресурсов, без тяжёлых картинок, без юридических текстов.
+showSplash(): overlay с fade-in, auto-dismiss через splashMaxMs=1.5с, пропуск по тапу/клику.
+null-container → мгновенный resolve (тесты, Node.js).
+config: studioName, games[] (ссылки на другие игры через GamesAPI).
+Тест нашёл ложный fail: xmlns="http://..." в SVG не является внешней ссылкой — исправлен тест.
+Тесты: 19 кейсов. Регрессия 368 → зелёные. Итого 387.
