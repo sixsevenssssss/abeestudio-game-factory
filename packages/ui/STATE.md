@@ -6,12 +6,11 @@
 - [x] Система тем — 5 тем × dark/light (тик 2)
 - [x] Базовые стили — src/base/base.css (тик 3)
 - [x] Скелет витрины (тик 4)
-- [x] Button.js — кнопка (тик 5, 2026-08-03)
-  - `src/components/Button.js` — 4 варианта: primary, secondary, danger, icon
-  - `src/components/Button.css` — все состояния: default, hover, active, disabled, loading
-  - `src/ui-object.js` — объект UI для удобного импорта всей библиотеки
-  - Витрина: секция Кнопки с 4×3 матрицей (4 варианта × 3 состояния)
-  - Исправлен баг: icon-кнопка в loading скрывает иконку (иначе overflow 3px)
+- [x] Button.js — 6 вариантов × 3 состояния (тики 5–6)
+- [x] Toggle.js — переключатель on/off (тик 7, 2026-08-03)
+  - `src/components/Toggle.js` — `Toggle(opts)`, `updateToggle(el, changes)`
+  - `src/components/Toggle.css` — трек, ползунок, пружинная анимация, disabled, reduced-motion
+  - Витрина: секция Формы — 4 переключателя + 2 disabled
 
 ## В работе
 
@@ -19,28 +18,25 @@ _пусто_
 
 ## Следующий шаг
 
-**Фаза 2, пункт 2:** Кнопки price (с ценой) и ad-reward (с иконкой рекламы) + витрина
+**Фаза 2, пункт 4:** Ползунок — `Slider.js` (горизонтальный, с метками) + витрина
 
 ## Сломано / блокеры
 
 _нет_
 
-## Проверено на живом Chromium (тик 5)
+## Проверено на живом Chromium (тик 7)
 
-check-showcase.py прошёл чисто после фикса icon-loading:
-- 2 темы × 3 viewport (360/820/1440) × RU+EN — ОК
-- Ноль console errors
-- Ноль горизонтальных переполнений
-- Все зоны нажатия ≥ 44px
-- EN-строки не обрезаются
+check-showcase.py — код 0. 2 темы × 3 viewport × RU+EN. Ноль overflow, ноль console errors, все зоны ≥ 44px.
 
-## Вес библиотеки (runtime, только подключённое)
+Примечание: тик 7 потерял первую попытку (лок не был снят из-за обрыва сессии в 21:17 UTC). Файлы пережили песочницу, коммит выполнен при повторном запуске в 22:19 UTC.
 
-`src/base/base.css`:        ~5 КБ  
-`src/themes/abee-default.css`: ~4 КБ (пример)  
-`src/themes/index.js`:      ~1 КБ  
-`src/components/Button.js`: ~2.5 КБ  
-`src/components/Button.css`:~3 КБ  
-`src/index.js`:             ~1 КБ  
-**Итого (1 тема + Button):** **~17 КБ**  
-Цель: < 150 КБ
+## Вес библиотеки (runtime)
+
+`src/base/base.css`:         ~5 КБ
+`src/themes/abee-default.css`: ~4 КБ
+`src/components/Button.js`:  ~2.5 КБ
+`src/components/Button.css`: ~3 КБ
+`src/components/Toggle.js`:  ~2 КБ
+`src/components/Toggle.css`: ~2 КБ
+`src/index.js`:              ~0.5 КБ
+**Итого (1 тема + Button + Toggle):** **~19 КБ**

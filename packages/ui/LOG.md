@@ -1,20 +1,27 @@
 # LOG — @abeestudio/ui
 
-## 2026-08-03 — Тик 6: варианты price + ad
+## 2026-08-03 — Тик 7: Toggle.js (с задержкой из-за обрыва сессии)
 
-**Пункт бэклога:** «Кнопки: price и ad-reward + витрина»
+**Пункт бэклога:** «Переключатель: Toggle.js (on/off) + витрина»
 
-**Что изменено:**
+**Что создано:**
 
-- `src/components/Button.js` — добавлен параметр `price` (строка для отображения в бейдже). `ad`-вариант использует иконку по умолчанию (`_AD_ICON_DEFAULT` — SVG треугольника воспроизведения), которую можно переопределить через `icon`. `updateButton` теперь поддерживает обновление `price`.
-- `src/components/Button.css` — добавлены два варианта:
-  - `.ui-btn--price`: `justify-content: space-between`, `min-width: 120px`, стиль бейджа `.ui-btn__price` (фон primary, контрастный текст).
-  - `.ui-btn--ad`: мягкая пульсирующая анимация `ui-btn-ad-pulse` (box-shadow ← → primary-surface), пауза при hover, отключается при `prefers-reduced-motion` и `.prefers-reduced-motion`.
-- `showcase/showcase.js` — рефакторинг: единая фабрика `_demoGroup(variant, labelKey, opts)`, 6 вариантов в секции «Кнопки».
+- `src/components/Toggle.js` — `Toggle(opts)` возвращает `HTMLLabelElement`. Реальный `<input type="checkbox" role="switch">` скрыт визуально, обеспечивает доступность и клавиатурный ввод. `updateToggle(el, { checked, disabled, label })` — обновление без перерендеринга. Событие `ui:toggle:change` на document. Параметры: checked, disabled, label, labelPos ('left'|'right'), id, onChange.
+- `src/components/Toggle.css` — трек 52×28px pill, ползунок 22px. Пружинная анимация `var(--ui-spring)`. Гоу-эффект при включённом состоянии (`box-shadow: shadow-glow`). Минимальная tap-зона ≥ 44px на корневом label. Disabled через `:has(:disabled)` + класс.
+- `src/index.js` — обновлён: экспортирует Toggle, updateToggle.
+- `src/ui-object.js` — обновлён: добавлены Toggle, updateToggle.
+- `showcase/showcase.js` — добавлен import Toggle, функция `initForms()` (4 переключателя + 2 disabled). Метки обновляются при смене языка через `_demoToggles` реестр.
+- `showcase/showcase.css` — добавлен `.sc-demo-row--col` для вертикального стека переключателей.
 
-**Яндекс Игры п. 1.16:** `ad`-кнопка инициирует НАСТОЯЩУЮ рекламу через `Ads.rewarded()` — это разрешено. Пульсация привлекает внимание, но не провоцирует случайный клик. В витрине используется демо без реальной рекламы.
+**Обстоятельства:** первая попытка тика (21:17 UTC) была прервана до выполнения коммита — файлы существовали в песочнице, лок остался `running`. Файлы пережили сессию. Повторный запуск в 22:19 UTC (через 62 минуты) обнаружил истёкший лок, подобрал готовые файлы и завершил тик.
 
-**Проверка:** check-showcase.py — код 0. 2 темы × 3 viewport × RU+EN.
+**Проверка:** check-showcase.py — код 0.
+
+---
+
+## 2026-08-03 — Тик 6: Button price + ad
+
+price-бейдж (space-between, min-width:120px), ad-пульс (@keyframes ui-btn-ad-pulse).
 
 ---
 
@@ -26,7 +33,7 @@
 
 ## 2026-08-03 — Тик 4: скелет витрины
 
-showcase/index.html + showcase.js + showcase.css. Исправлен HTTP-сервер.
+showcase/. Исправлен HTTP-сервер (из pkg root).
 
 ---
 
@@ -36,12 +43,4 @@ src/base/base.css — п. 1.6 Яндекс Игр.
 
 ---
 
-## 2026-08-03 — Тик 2: система тем
-
-5 тем × dark/light. switchTheme().
-
----
-
-## 2026-08-03 — Тик 1: bootstrap
-
-Структура пакета, PLAN.md, BACKLOG.md, tools/check-showcase.py.
+## 2026-08-03 — Тик 2: система тем; Тик 1: bootstrap

@@ -16,7 +16,7 @@
 
 - [x] Кнопки: Button.js — варианты primary, secondary, danger, icon + витрина (все состояния: default, hover, active, disabled, loading)
 - [x] Кнопки: price (кнопка с ценой) и ad-reward (с иконкой рекламы) + витрина
-- [ ] Переключатель: Toggle.js (on/off) + витрина
+- [x] Переключатель: Toggle.js (on/off) + витрина
 - [ ] Ползунок: Slider.js (горизонтальный, с метками) + витрина
 - [ ] Вкладки: Tabs.js (горизонтальные, с нижней линией) + витрина
 - [ ] Поле ввода: Input.js (text, number, с иконкой, с ошибкой) + витрина
