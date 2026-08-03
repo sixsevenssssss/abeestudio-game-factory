@@ -172,3 +172,15 @@ EventBus: app:hidden→suspend, app:visible→resumeCtx, audio:ducked/unducked.
   Реальный AudioBufferSourceNode будет добавлен когда появится ассет-загрузчик (тик 15+).
   Для игр важна логика (пул, duck, crossfade) — она протестирована.
 - pool trimming: удаляем самый старый (handles[0]), новый добавляем в конец.
+
+---
+
+## 2026-08-03 — Тик 10: L10nSystem (src/l10n.js)
+
+**Что сделано:** написан `src/l10n.js`.
+t(key, vars): подстановка {{var}}, фоллбэк на другой язык, ключ-как-значение если нет нигде.
+plural(n, forms): RU (0/11/21/111 — все исключения), EN (singular/plural).
+setLang(lang): горячая смена + l10n:changed EventBus; тот же язык игнорируется.
+_normalizeLang: 'ru-RU' → 'ru', 'en_US' → 'en'.
+_checkParity: Warning для каждого ключа, отсутствующего в одном из словарей.
+Тесты: 39 кейсов. Регрессия 241 → зелёные. Итого 280.
