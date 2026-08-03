@@ -55,3 +55,23 @@ UPDATE_STEP_MS=16, MAX_STEPS=5. Тесты: 20 кейсов, все зелёны
 - visibilitychange: emit('app:hidden')→pause(), emit('app:visible')→resume().
   Аудио-duck делается в Audio-системе по событию app:hidden, не в Loop (разделение ответственностей).
 - Найден и исправлен баг в тесте: второй _tick(20) должен быть _tick(40) — тот же timestamp давал delta=0.
+
+---
+
+## 2026-08-03 — Тик 3: SceneManager (src/scenes.js)
+
+**Что сделано:** написан `src/scenes.js` — менеджер сцен со стеком.
+go(name, payload): fade-out→exit all→preload→enter→fade-in.
+push(name, payload): pause current→preload→enter.
+pop(): exit top→resume previous.
+update(dt)/render(alpha): делегируют в активную сцену.
+Тесты: 28 кейсов, все зелёные. Регрессия: 17+20 — зелёные.
+
+**Решения:**
+- fadeDuration: 0 в конструкторе — переходы мгновенные, тесты синхронны.
+- Fade-оверлей рендерится поверх сцены через _renderFadeOverlay(); без canvas — no-op.
+- _callHook() ловит исключения — ошибка в enter/exit не ломает переход.
+- Конкурентный go/push игнорируется (флаг _transitioning), тест подтверждён.
+- _stackNames() использует constructor.sceneName ?? constructor.name — тест нашёл баг:
+  класс без sceneName давал имя класса, а не ключ реестра. Правильно — оба варианта OK,
+  просто тест должен добавлять sceneName. Исправлено в тесте.
