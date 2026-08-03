@@ -159,6 +159,83 @@ export function extractStringLiterals(source) {
   return literals;
 }
 
+/**
+ * Заглушает комментарии и содержимое строковых литералов пробелами,
+ * сохраняя длину, переводы строк и позиции символов.
+ *
+ * Нужно для поиска ИДЕНТИФИКАТОРОВ (ysdk, localStorage, WebSocket): упоминание
+ * в комментарии или внутри строки не является обращением к API, а номера строк
+ * в отчёте обязаны совпадать с настоящим файлом.
+ */
+export function maskSource(source) {
+  const out = Array.from(source);
+  let i = 0;
+  const n = source.length;
+  const blank = (from, to) => {
+    for (let k = from; k < to && k < n; k++) {
+      if (out[k] !== '\n') out[k] = ' ';
+    }
+  };
+
+  while (i < n) {
+    const ch = source[i];
+
+    if (ch === '/' && source[i + 1] === '/') {
+      const start = i;
+      while (i < n && source[i] !== '\n') i++;
+      blank(start, i);
+      continue;
+    }
+
+    if (ch === '/' && source[i + 1] === '*') {
+      const start = i;
+      i += 2;
+      while (i < n && !(source[i] === '*' && source[i + 1] === '/')) i++;
+      i = Math.min(i + 2, n);
+      blank(start, i);
+      continue;
+    }
+
+    if (ch === '"' || ch === "'" || ch === '`') {
+      const quote = ch;
+      const contentStart = ++i;
+      while (i < n) {
+        if (source[i] === '\\') { i += 2; continue; }
+        if (source[i] === quote) break;
+        i++;
+      }
+      blank(contentStart, i);
+      i++;  // закрывающая кавычка
+      continue;
+    }
+
+    i++;
+  }
+
+  return out.join('');
+}
+
+/**
+ * Ищет регулярное выражение в тексте и возвращает совпадения с номерами строк.
+ * @returns {Array<{match: string, line: number, lineText: string}>}
+ */
+export function findMatches(text, regex) {
+  const flags = regex.flags.includes('g') ? regex.flags : regex.flags + 'g';
+  const re = new RegExp(regex.source, flags);
+  const lines = text.split('\n');
+  const out = [];
+
+  for (let idx = 0; idx < lines.length; idx++) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(lines[idx])) !== null) {
+      out.push({ match: m[0], line: idx + 1, lineText: lines[idx] });
+      if (m.index === re.lastIndex) re.lastIndex++;  // защита от пустого совпадения
+    }
+  }
+  return out;
+}
+
 /** Обрезает строку для вывода в отчёте. */
 export function truncate(str, max = 50) {
   const oneLine = str.replace(/\s+/g, ' ').trim();
