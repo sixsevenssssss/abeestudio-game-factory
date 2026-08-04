@@ -28,7 +28,7 @@
 
 ## Сборка ядра
 
-- [ ] **Тик 15** — `packages/engine/index.js` — barrel export: { Engine, Save, Ads, Achievements, Daily, Audio, L10n, Analytics, Platform, Brand }. Engine.start({ scenes, config }) инициализирует все системы в правильном порядке (Platform → L10n → Save → Audio → Achievements → Daily → Analytics → Ads → Scenes → Loop → Brand.showSplash → LoadingAPI.ready).
+- [x] **Тик 15** — `packages/engine/index.js` — barrel export: { Engine, Save, Ads, Achievements, Daily, Audio, L10n, Analytics, Platform, Brand }. Engine.start({ scenes, config }) инициализирует все системы в правильном порядке (Platform → L10n → Save → Audio → Achievements → Daily → Analytics → Ads → Scenes → Loop → Brand.showSplash → LoadingAPI.ready).
 
 ## Шаблон игры
 

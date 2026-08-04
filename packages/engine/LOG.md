@@ -234,3 +234,15 @@ null-container → мгновенный resolve (тесты, Node.js).
 config: studioName, games[] (ссылки на другие игры через GamesAPI).
 Тест нашёл ложный fail: xmlns="http://..." в SVG не является внешней ссылкой — исправлен тест.
 Тесты: 19 кейсов. Регрессия 368 → зелёные. Итого 387.
+
+---
+
+## 2026-08-04 — Тик 15: Engine barrel index.js
+
+**Что сделано:** написан `index.js` — barrel export + Engine singleton.
+Engine.start(): Platform→L10n→Save→Audio→Achievements→Daily→Analytics→Ads→Scenes→Loop→(Input)→Brand.showSplash→LoadingAPI.ready→firstScene→sessionStart/firstSession.
+Engine.stop(): останавливает loop, очищает ресурсы.
+Engine.events/scenes/loop/save/audio/l10n/analytics/brand — статические геттеры к instance.
+Fallback EventBus доступен до start() — нет NPE при раннем bind.
+Тесты: 35 кейсов. Регрессия 387 → зелёные. Итого 422.
+ЯДРО ПОЛНОСТЬЮ НАПИСАНО. Далее — шаблон игры.
