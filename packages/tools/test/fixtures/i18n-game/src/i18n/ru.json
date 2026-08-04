@@ -10,5 +10,9 @@
   },
   "lang": {
     "choose": "Выберите язык"
+  },
+  "about": {
+    "title": "Об игре",
+    "studio": "Игра студии abeeStudio"
   }
 }

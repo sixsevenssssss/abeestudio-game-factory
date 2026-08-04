@@ -10,5 +10,9 @@
   },
   "lang": {
     "choose": "Choose language"
+  },
+  "about": {
+    "title": "About",
+    "studio": "A game by abeeStudio"
   }
 }
