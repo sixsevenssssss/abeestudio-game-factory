@@ -8,6 +8,7 @@ import { Slider }                   from '../src/components/Slider.js';
 import { Tabs }                     from '../src/components/Tabs.js';
 import { Input }                    from '../src/components/Input.js';
 import { Checkbox, updateCheckbox } from '../src/components/Checkbox.js';
+import { Modal  } from '../src/components/Modal.js';
 import { Panel, Card               } from '../src/components/Panel.js';
 
 const I18N = {
@@ -34,6 +35,8 @@ const I18N = {
     'pan.settings':'Настройки звука','pan.body':'Управляйте звуком и музыкой в игре.',
     'card.hero':'Герой','card.weapon':'Оружие','card.profile':'Профиль игрока',
     'card.click':'Кликабельная карточка','card.body':'Описание содержимого карточки.',
+    'modal.open.soft':  'Открыть (мягкий)', 'modal.open.spring': 'Открыть (пружина)', 'modal.open.snap': 'Открыть (резкий)',
+    'modal.title': 'Подтверждение действия', 'modal.body': 'Вы уверены, что хотите продолжить? Это действие нельзя отменить.', 'modal.cancel': 'Отмена', 'modal.confirm': 'Подтвердить',
   },
   en: {
     'ctrl.theme':'Theme','ctrl.variant':'Variant','ctrl.dark':'Dark','ctrl.light':'Light','ctrl.viewport':'Viewport',
@@ -58,6 +61,8 @@ const I18N = {
     'pan.settings':'Sound Settings','pan.body':'Manage sound and music in the game.',
     'card.hero':'Hero','card.weapon':'Weapon','card.profile':'Player Profile',
     'card.click':'Clickable Card','card.body':'Card content description goes here.',
+    'modal.open.soft':  'Open (soft)', 'modal.open.spring': 'Open (spring)', 'modal.open.snap': 'Open (snap)',
+    'modal.title': 'Confirm Action', 'modal.body': 'Are you sure you want to continue? This action cannot be undone.', 'modal.cancel': 'Cancel', 'modal.confirm': 'Confirm',
   },
 };
 
@@ -224,9 +229,38 @@ function initPanelsSection(){
   c.append(pg,cg);
 }
 
+
+function initOverlays(){
+  const c=document.querySelector('#sec-overlays .sc-items');if(!c)return;c.innerHTML='';
+
+  const g=document.createElement('div');g.className='sc-demo-group';
+  const h=document.createElement('div');h.className='sc-demo-variant';h.textContent='modal';g.appendChild(h);
+  const row=document.createElement('div');row.className='sc-demo-row';
+
+  for(const[anim,lk]of[['soft','modal.open.soft'],['spring','modal.open.spring'],['snap','modal.open.snap']]){
+    const btn=Button({label:t(lk),variant:'secondary',onClick:()=>{
+      const body=document.createElement('p');
+      body.style.cssText='color:var(--ui-text-2);line-height:1.5;margin:0;';
+      body.textContent=t('modal.body');
+      const modal=Modal({
+        title:t('modal.title'),content:body,animation:anim,
+        buttons:[
+          Button({label:t('modal.cancel'), variant:'secondary',onClick:()=>modal.close()}),
+          Button({label:t('modal.confirm'),variant:'primary',  onClick:()=>modal.close()}),
+        ],
+      });
+      modal.open();
+    }});
+    row.appendChild(btn);
+    _demoBtns.push({el:btn,labelKey:lk});
+  }
+  g.appendChild(row);c.appendChild(g);
+}
+
 applyLang('ru');
 applyViewport('desktop');
 initButtons();
 initForms();
 initTabsSection();
 initPanelsSection();
+initOverlays();

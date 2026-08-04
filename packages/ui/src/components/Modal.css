@@ -1,0 +1,167 @@
+/*
+ * Modal.css — модальное окно @abeestudio/ui
+ * Загружается автоматически при импорте Modal.js.
+ */
+
+/* ── ОВЕРЛЕЙ ─────────────────────────────────────────────── */
+.ui-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+
+  background: var(--ui-overlay, rgba(0 0 0 / 0.65));
+
+  /* Состояние до открытия */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+
+.ui-modal-overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ui-modal-overlay--closing {
+  pointer-events: none;
+}
+
+/* ── ОКНО ────────────────────────────────────────────────── */
+.ui-modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  background:    var(--ui-bg-2, #16213e);
+  border:        1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+  border-radius: var(--ui-r-lg, 22px);
+  box-shadow:    var(--ui-shadow-lg, 0 8px 40px rgba(0 0 0 / 0.55));
+  outline: none;
+
+  /* Анимация по умолчанию (soft) */
+  transform: translateY(20px) scale(0.97);
+  transition:
+    transform var(--ui-dur-s, 380ms) var(--ui-ease, ease),
+    opacity   var(--ui-dur-s, 380ms) var(--ui-ease, ease);
+}
+
+.ui-modal-overlay--visible .ui-modal {
+  transform: translateY(0) scale(1);
+}
+.ui-modal-overlay--closing .ui-modal {
+  transform: translateY(20px) scale(0.97);
+}
+
+/* Пружинный вход */
+.ui-modal-overlay--spring .ui-modal {
+  transform: translateY(32px) scale(0.92);
+  transition:
+    transform var(--ui-dur-s, 380ms) var(--ui-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    opacity   var(--ui-dur-s, 380ms) var(--ui-ease, ease);
+}
+
+/* Резкий вход */
+.ui-modal-overlay--snap .ui-modal {
+  transform: scale(0.85);
+  transition:
+    transform 120ms var(--ui-snap, cubic-bezier(0.0, 0.0, 0.2, 1)),
+    opacity   120ms var(--ui-snap, cubic-bezier(0.0, 0.0, 0.2, 1));
+}
+
+/* ── ЗАГОЛОВОК ───────────────────────────────────────────── */
+.ui-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 20px 20px 14px;
+  flex-shrink: 0;
+}
+
+.ui-modal__title {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-lg, 20px);
+  font-weight: var(--ui-fw-b,  700);
+  color:       var(--ui-text,  #eeeef2);
+  margin: 0;
+  flex: 1;
+}
+
+/* Кнопка закрытия ✕ */
+.ui-modal__close {
+  /* Минимальная зона нажатия ≥ 44px */
+  min-width:  44px;
+  min-height: 44px;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  background:   transparent;
+  border:       none;
+  border-radius: var(--ui-r-sm, 8px);
+  color:        var(--ui-text-2);
+  cursor:       pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: color var(--ui-dur, 200ms) var(--ui-ease, ease),
+              background var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+.ui-modal__close:hover {
+  color:       var(--ui-text);
+  background:  var(--ui-surface, rgba(255 255 255 / 0.07));
+}
+.ui-modal__close:focus-visible {
+  outline: 2px solid var(--ui-primary, #f0a500);
+  outline-offset: 2px;
+}
+.ui-modal__close svg {
+  width: 20px; height: 20px;
+  display: block;
+  pointer-events: none;
+}
+
+/* ── ТЕЛО ────────────────────────────────────────────────── */
+.ui-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 20px 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  color:       var(--ui-text-2);
+  line-height: var(--ui-lh, 1.4);
+}
+.ui-modal__body::-webkit-scrollbar { display: none; }
+
+/* ── ПОДВАЛ ──────────────────────────────────────────────── */
+.ui-modal__footer {
+  display:     flex;
+  gap:         10px;
+  justify-content: flex-end;
+  flex-wrap:   wrap;
+  padding:     14px 20px 20px;
+  flex-shrink: 0;
+  border-top:  1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ui-modal-overlay { transition-duration: 1ms !important; }
+  .ui-modal         { transition-duration: 1ms !important; }
+}
+.prefers-reduced-motion .ui-modal-overlay,
+.prefers-reduced-motion .ui-modal { transition-duration: 1ms !important; }
