@@ -1,0 +1,124 @@
+/*
+ * Panel.css — панели и карточки @abeestudio/ui
+ * Загружается автоматически при импорте Panel.js.
+ */
+
+/* ══════════════════════════════════════════════════════════
+   PANEL
+══════════════════════════════════════════════════════════ */
+
+.ui-panel {
+  background:    var(--ui-surface,  rgba(255 255 255 / 0.07));
+  border:        1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+  border-radius: var(--ui-r-md, 14px);
+  overflow: hidden;
+  width: 100%;
+}
+
+.ui-panel__header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+}
+
+.ui-panel__title {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  font-weight: var(--ui-fw-b,  700);
+  color:       var(--ui-text,  #eeeef2);
+  margin: 0;
+}
+
+.ui-panel__body {
+  padding: 16px;
+}
+.ui-panel__body--no-pad {
+  padding: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD
+══════════════════════════════════════════════════════════ */
+
+.ui-card {
+  background:    var(--ui-surface-2, rgba(255 255 255 / 0.13));
+  border:        1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+  border-radius: var(--ui-r-md, 14px);
+  overflow: hidden;
+  width: 100%;
+
+  transition:
+    background  var(--ui-dur, 200ms) var(--ui-ease, ease),
+    box-shadow  var(--ui-dur, 200ms) var(--ui-ease, ease),
+    transform   var(--ui-dur, 200ms) var(--ui-ease, ease),
+    border-color var(--ui-dur, 200ms) var(--ui-ease, ease);
+}
+
+/* ── Outlined ─────────────────────────────────────────────── */
+.ui-card--outlined {
+  background:   transparent;
+  border-color: var(--ui-border-2, rgba(255 255 255 / 0.18));
+}
+
+/* ── Elevated ─────────────────────────────────────────────── */
+.ui-card--elevated {
+  background: var(--ui-surface-2, rgba(255 255 255 / 0.13));
+  box-shadow: var(--ui-shadow-md, 0 4px 20px rgba(0 0 0 / 0.45));
+  border-color: transparent;
+}
+
+/* ── Clickable ────────────────────────────────────────────── */
+.ui-card--clickable {
+  /* Минимальная зона нажатия ≥ 44px */
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.ui-card--clickable:hover {
+  background:   var(--ui-surface-3, rgba(255 255 255 / 0.20));
+  border-color: var(--ui-primary,   #f0a500);
+  transform:    translateY(-2px);
+  box-shadow:   var(--ui-shadow-md, 0 4px 20px rgba(0 0 0 / 0.45));
+}
+
+.ui-card--clickable:active {
+  transform:  translateY(0);
+  box-shadow: var(--ui-shadow-sm, 0 2px 8px rgba(0 0 0 / 0.35));
+}
+
+/* Focus ring */
+.ui-card--clickable:focus-visible {
+  outline:        2px solid var(--ui-primary, #f0a500);
+  outline-offset: 2px;
+}
+
+/* ── Card header & body ───────────────────────────────────── */
+.ui-card__header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--ui-border, rgba(255 255 255 / 0.10));
+}
+
+.ui-card--outlined .ui-card__header { border-bottom-color: var(--ui-border-2); }
+.ui-card--elevated  .ui-card__header { border-bottom-color: rgba(255 255 255 / 0.08); }
+
+.ui-card__title {
+  font-family: var(--ui-font,  system-ui, -apple-system, sans-serif);
+  font-size:   var(--ui-fs-md, 16px);
+  font-weight: var(--ui-fw-b,  700);
+  color:       var(--ui-text,  #eeeef2);
+  margin: 0;
+}
+
+.ui-card__body {
+  padding: 16px;
+}
+.ui-card__body--no-pad { padding: 0; }
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ui-card { transition-duration: 1ms !important; }
+}
+.prefers-reduced-motion .ui-card { transition-duration: 1ms !important; }

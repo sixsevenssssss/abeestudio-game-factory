@@ -54,3 +54,5 @@
 /* Группа для широких компонентов (ползунков) — занимает всю доступную ширину */
 .sc-demo-group--wide { flex: 1 1 240px; min-width: 200px; max-width: 100%; }
 .sc-demo-col { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.sc-demo-row--wrap { flex-wrap: wrap; gap: 12px; }
